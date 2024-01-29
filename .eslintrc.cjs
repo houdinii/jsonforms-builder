@@ -18,8 +18,8 @@ const config = {
   parserOptions: {
     project: path.join(__dirname, "tsconfig.json")
   },
-  plugins: ["@typescript-eslint", "simple-import-sort"],
-  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  plugins: ["@typescript-eslint", "simple-import-sort", "react-hooks"],
+  extends: ["plugin:@typescript-eslint/recommended"],
   rules: {
     "simple-import-sort/imports": [
       "error",
@@ -38,7 +38,6 @@ const config = {
         ]
       }
     ],
-
     "@typescript-eslint/consistent-type-imports": [
       "error",
       {
@@ -46,6 +45,7 @@ const config = {
         fixStyle: "inline-type-imports"
       }
     ],
+    "react-hooks/exhaustive-deps": "error",
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "no-console": "error",
     "no-underscore-dangle": ["error", { allow: [""] }]
