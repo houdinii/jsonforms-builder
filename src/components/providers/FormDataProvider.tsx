@@ -9,13 +9,15 @@ import React, {
 
 import { type JsonFormsCore, type Layout } from "@jsonforms/core";
 
+import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
+
 interface IFormDataContext {
   data: Record<string, unknown>;
   schema: JsonFormsCore["schema"] | undefined;
   uischema: Layout | undefined;
   changeData: (newData: JsonFormsCore["data"]) => void;
   changeSchema: (newSchema: JsonFormsCore["schema"]) => void;
-  changeUiSchema: (newUiSchema: Layout) => void;
+  changeUiSchema: (newUiSchema: ElementWithBreadcrumbs<Layout>) => void;
 }
 
 const FormDataContext = React.createContext<IFormDataContext | null>(null);

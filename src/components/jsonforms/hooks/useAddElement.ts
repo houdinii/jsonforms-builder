@@ -13,7 +13,9 @@ export const useAddElement = (
   const { changeUiSchema, uischema } = useFormData();
 
   const path = `elements${
-    parentBreadcrumbs.length ? `[${parentBreadcrumbs.join("].elements[")}]` : ""
+    parentBreadcrumbs?.length
+      ? `[${parentBreadcrumbs.join("].elements[")}]`
+      : ""
   }`;
 
   const handleElementAdd = (element: UISchemaElement | Layout) => {
@@ -47,7 +49,7 @@ export const useAddElement = (
           }
     );
 
-    changeUiSchema({ ...uiSchemaCopy });
+    changeUiSchema({ ...uiSchemaCopy } as ElementWithBreadcrumbs<Layout>);
   };
 
   return handleElementAdd;
