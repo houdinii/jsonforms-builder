@@ -5,6 +5,8 @@ import set from "lodash.set";
 import { useFormData } from "../../providers/FormDataProvider";
 import { type ElementWithBreadcrumbs } from "../renderers/types";
 
+type UiSchemaElement = UISchemaElement | Layout;
+
 export const useAddElement = (
   parentElement: ElementWithBreadcrumbs<Layout>
 ) => {
@@ -18,7 +20,7 @@ export const useAddElement = (
       : ""
   }`;
 
-  const handleElementAdd = (element: UISchemaElement | Layout) => {
+  const handleElementAdd = (element: UiSchemaElement & { label?: string }) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const uiSchemaCopy = { ...uischema! };
     const { elements } = get(

@@ -6,6 +6,8 @@ import { UiElementTypes } from "../FormInitializer/FormInitializer";
 import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
 import { useAddElement } from "../jsonforms/hooks/useAddElement";
 import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 import {
   Select,
@@ -57,7 +59,6 @@ export const AddLayoutElement: FC<{
   const handleGroupAdd = (groupLabel: string) => {
     handleElementAdd({
       type: "Group",
-      // @ts-expect-error -- Json FORMS types are not up to date
       label: groupLabel,
       elements: []
     });
@@ -80,6 +81,36 @@ export const AddLayoutElement: FC<{
         </SelectContent>
       </Select>
       {addingElement && <GroupLabel onGroupAdd={handleGroupAdd} />}
+    </div>
+  );
+};
+
+export const AddCategoryElement: FC<{
+  uiSchema: ElementWithBreadcrumbs<Layout>;
+}> = ({ uiSchema }) => {
+  const [value, setValue] = useState("");
+
+  const handleElementAdd = useAddElement(uiSchema);
+
+  const handleButtonClick = () => {
+    handleElementAdd({
+      type: "Category",
+      label: value,
+      elements: []
+    });
+    setValue("");
+  };
+
+  return (
+    <div className="flex gap-4">
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={"Category label"}
+      />
+      <Button disabled={!value} onClick={handleButtonClick}>
+        Add category
+      </Button>
     </div>
   );
 };

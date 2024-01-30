@@ -43,7 +43,11 @@ export const FormInitializer = () => {
         setAddingGroup(true);
       },
       categorization: () => {
-        // TODO: implement
+        changeUiSchema({
+          type: "Categorization",
+          elements: [],
+          breadcrumbs: []
+        });
       }
     };
 
