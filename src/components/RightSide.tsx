@@ -12,6 +12,7 @@ export const RightSide = () => {
       <h2 className="text-2xl text-center mb-4 text-slate-50">Form</h2>
       {!!uischema ? (
         <JsonForms
+          key={JSON.stringify(uischema) + JSON.stringify(schema)}
           schema={schema}
           uischema={uischema}
           data={data}

@@ -17,21 +17,17 @@ const GroupRenderer = (props: StatePropsOfLayout) => {
 
   const group = uischema as GroupLayout & LabelDescription;
   const { label, elements } = group;
-  const uiSchemaWithBreadCrumbs = uischema as ElementWithBreadcrumbs<Layout>;
 
   if (!visible) {
     return null;
   }
 
-  const path = `elements${
-    uiSchemaWithBreadCrumbs.breadcrumbs.length
-      ? `[${uiSchemaWithBreadCrumbs.breadcrumbs.join("].elements[")}]`
-      : ""
-  }`;
-
   return (
-    <div>
-      {label && <h3 className="text-2xl text-slate-50">{label}</h3>}
+    <div
+      className="bg-slate-50 rounded-md p-5 shadow-xl"
+      key={`-${label ?? ""}-${elements.length}`}
+    >
+      {label && <h3 className="text-2xl ">{label}</h3>}
       {elements.map((child) => {
         return (
           <JsonFormsDispatch
@@ -41,10 +37,10 @@ const GroupRenderer = (props: StatePropsOfLayout) => {
           />
         );
       })}
-      <div className="flex justify-between gap-4">
+      <div className="flex justify-between gap-4 mt-5 w-full">
         <AddLayoutElement
-          breadcrumbPath={path}
-          previousBreadcrumbs={uiSchemaWithBreadCrumbs.breadcrumbs}
+          key={`${label ?? ""}-${elements.length}`}
+          uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
         />
         {/* <AddElement breadcrumbPath={[...breadcrumbs, elements.length]} /> */}
       </div>

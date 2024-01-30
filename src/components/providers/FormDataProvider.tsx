@@ -23,7 +23,6 @@ const FormDataContext = React.createContext<IFormDataContext | null>(null);
 export const FormDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [schema, setSchema] = useState<IFormDataContext["schema"]>();
   const [uischema, setUiSchema] = useState<IFormDataContext["uischema"]>();
-
   const [data, setData] = useState<IFormDataContext["data"]>({});
 
   const changeUiSchema = useCallback(

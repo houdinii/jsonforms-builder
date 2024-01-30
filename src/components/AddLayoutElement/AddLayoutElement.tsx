@@ -1,11 +1,11 @@
-import React, { type FC } from "react";
+import { type FC, useState } from "react";
 
 import { type Layout } from "@jsonforms/core";
-import get from "lodash.get";
-import set from "lodash.set";
 
 import { UiElementTypes } from "../FormInitializer/FormInitializer";
-import { useFormData } from "../providers/FormDataProvider";
+import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
+import { useAddElement } from "../jsonforms/hooks/useAddElement";
+import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
 
 import {
   Select,
@@ -16,69 +16,70 @@ import {
 } from "@/components/ui/select";
 
 export const AddLayoutElement: FC<{
-  breadcrumbPath: string;
-  previousBreadcrumbs: number[];
-}> = ({ breadcrumbPath, previousBreadcrumbs }) => {
-  const { changeUiSchema, uischema } = useFormData();
+  uiSchema: ElementWithBreadcrumbs<Layout>;
+}> = ({ uiSchema: parentUiSchema }) => {
+  const [value, setValue] = useState<string>();
+  const [addingElement, setAddingElement] = useState(false);
+
+  const handleElementAdd = useAddElement(parentUiSchema);
 
   const onSelectChange = (value: keyof typeof UiElementTypes) => {
     const actions = {
       horizontal: () => {
-        changeUiSchema({
+        handleElementAdd({
           type: "HorizontalLayout",
           elements: []
         });
+        setValue("");
       },
       vertical: () => {
-        changeUiSchema({
+        handleElementAdd({
           type: "VerticalLayout",
           elements: []
         });
+        setValue("");
       },
       group: () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const uiSchemaCopy = { ...uischema! };
-        const parentUiSchemaElements = get(
-          uischema,
-          breadcrumbPath
-        ) as Layout["elements"];
-
-        parentUiSchemaElements.push({
-          type: "Group",
-          // @ts-expect-error -- Json FORMS types are not up to date
-          label: "New group",
-          elements: [],
-          breadcrumbs: [...previousBreadcrumbs, parentUiSchemaElements.length]
-        });
-
-        const modifiedUiSchema = set(
-          uiSchemaCopy,
-          breadcrumbPath,
-          parentUiSchemaElements
-        );
-
-        changeUiSchema(modifiedUiSchema);
+        setAddingElement(true);
       },
       categorization: () => {
-        // TODO: implement
+        handleElementAdd({
+          type: "Categorization",
+          elements: []
+        });
+        setValue("");
       }
     };
 
     actions[value]();
   };
 
+  const handleGroupAdd = (groupLabel: string) => {
+    handleElementAdd({
+      type: "Group",
+      // @ts-expect-error -- Json FORMS types are not up to date
+      label: groupLabel,
+      elements: []
+    });
+    setAddingElement(false);
+    setValue("");
+  };
+
   return (
-    <Select onValueChange={onSelectChange}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Add ui element" />
-      </SelectTrigger>
-      <SelectContent>
-        {Object.entries(UiElementTypes).map(([key, value]) => (
-          <SelectItem value={key} key={key}>
-            {value}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div>
+      <Select value={value} onValueChange={onSelectChange}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Add ui element" />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.entries(UiElementTypes).map(([key, value]) => (
+            <SelectItem value={key} key={key}>
+              {value}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {addingElement && <GroupLabel onGroupAdd={handleGroupAdd} />}
+    </div>
   );
 };
