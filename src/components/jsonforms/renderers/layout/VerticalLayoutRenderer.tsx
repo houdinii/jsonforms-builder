@@ -21,7 +21,7 @@ const VerticalLayoutRenderer = (props: StatePropsOfLayout) => {
   }
 
   return (
-    <div className="bg-slate-50 rounded-md p-5 shadow-xl">
+    <div className="bg-slate-50 rounded-md p-5 shadow-around">
       {elements.map((child, idx) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
       })}

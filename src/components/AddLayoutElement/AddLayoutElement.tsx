@@ -4,7 +4,7 @@ import { type Layout } from "@jsonforms/core";
 
 import { UiElementTypes } from "../FormInitializer/FormInitializer";
 import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
-import { useAddElement } from "../jsonforms/hooks/useAddElement";
+import { useAddUiElement } from "../jsonforms/hooks/useElements";
 import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -23,19 +23,19 @@ export const AddLayoutElement: FC<{
   const [value, setValue] = useState<string>();
   const [addingElement, setAddingElement] = useState(false);
 
-  const handleElementAdd = useAddElement(parentUiSchema);
+  const handleUiElementAdd = useAddUiElement(parentUiSchema);
 
   const onSelectChange = (value: keyof typeof UiElementTypes) => {
     const actions = {
       horizontal: () => {
-        handleElementAdd({
+        handleUiElementAdd({
           type: "HorizontalLayout",
           elements: []
         });
         setValue("");
       },
       vertical: () => {
-        handleElementAdd({
+        handleUiElementAdd({
           type: "VerticalLayout",
           elements: []
         });
@@ -45,7 +45,7 @@ export const AddLayoutElement: FC<{
         setAddingElement(true);
       },
       categorization: () => {
-        handleElementAdd({
+        handleUiElementAdd({
           type: "Categorization",
           elements: []
         });
@@ -57,7 +57,7 @@ export const AddLayoutElement: FC<{
   };
 
   const handleGroupAdd = (groupLabel: string) => {
-    handleElementAdd({
+    handleUiElementAdd({
       type: "Group",
       label: groupLabel,
       elements: []
@@ -90,10 +90,10 @@ export const AddCategoryElement: FC<{
 }> = ({ uiSchema }) => {
   const [value, setValue] = useState("");
 
-  const handleElementAdd = useAddElement(uiSchema);
+  const handleUiElementAdd = useAddUiElement(uiSchema);
 
   const handleButtonClick = () => {
-    handleElementAdd({
+    handleUiElementAdd({
       type: "Category",
       label: value,
       elements: []

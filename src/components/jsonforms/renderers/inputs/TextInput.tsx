@@ -9,8 +9,12 @@ interface RatingControlProps {
   handleChange(path: string, value: string): void;
 }
 
-const TextInput = ({ data, path, handleChange }: RatingControlProps) => (
-  <Input value={data} onChange={(ev) => handleChange(path, ev.target.value)} />
+const TextInput = ({ data = "", path, handleChange }: RatingControlProps) => (
+  <Input
+    className="mb-2"
+    value={data}
+    onChange={(ev) => handleChange(path, ev.target.value)}
+  />
 );
 
 const tester = rankWith(1, isControl);

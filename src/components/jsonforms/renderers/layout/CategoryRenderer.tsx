@@ -21,7 +21,7 @@ const CategoryRenderer = (props: StatePropsOfLayout) => {
   }
 
   return (
-    <div className="bg-slate-50 rounded-md p-5 shadow-xl">
+    <div className="bg-slate-50 rounded-md p-5 shadow-around">
       {label && <h3 className="text-xl text-center">{label}</h3>}
       {elements.map((child, idx) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;

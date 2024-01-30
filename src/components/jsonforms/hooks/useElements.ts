@@ -1,4 +1,8 @@
-import { type Layout, type UISchemaElement } from "@jsonforms/core";
+import {
+  type ControlElement,
+  type Layout,
+  type UISchemaElement
+} from "@jsonforms/core";
 import get from "lodash.get";
 import set from "lodash.set";
 
@@ -7,7 +11,7 @@ import { type ElementWithBreadcrumbs } from "../renderers/types";
 
 type UiSchemaElement = UISchemaElement | Layout;
 
-export const useAddElement = (
+export const useAddUiElement = (
   parentElement: ElementWithBreadcrumbs<Layout>
 ) => {
   const { breadcrumbs: parentBreadcrumbs, elements: parentElements } =
@@ -20,7 +24,9 @@ export const useAddElement = (
       : ""
   }`;
 
-  const handleElementAdd = (element: UiSchemaElement & { label?: string }) => {
+  const handleElementAdd = (
+    element: (UiSchemaElement & { label?: string }) | ControlElement
+  ) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const uiSchemaCopy = { ...uischema! };
     const { elements } = get(
@@ -52,6 +58,22 @@ export const useAddElement = (
     );
 
     changeUiSchema({ ...uiSchemaCopy } as ElementWithBreadcrumbs<Layout>);
+  };
+
+  return handleElementAdd;
+};
+
+export const useAddElement = () => {
+  const { changeSchema, schema } = useFormData();
+
+  const handleElementAdd = (scope: string, element: { type: string }) => {
+    const path = scope.replace("#/", "").replaceAll("/", ".");
+
+    const schemaCopy = { ...schema };
+
+    set(schemaCopy, path, element);
+
+    changeSchema(schemaCopy);
   };
 
   return handleElementAdd;
