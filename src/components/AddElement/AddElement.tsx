@@ -21,37 +21,44 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 enum ControlElementTypes {
-  input = "TextInput",
+  input = "Text",
+  number = "Number",
+  integer = "Integer",
   boolean = "Checkbox",
   enum = "Enum"
 }
 
+type ElementType = keyof typeof ControlElementTypes;
 export const AddElement: FC<{
   uiSchema: ElementWithBreadcrumbs<Layout>;
 }> = ({ uiSchema }) => {
-  const [elementType, setElementType] =
-    useState<keyof typeof ControlElementTypes>();
+  const [elementType, setElementType] = useState<ElementType>();
 
-  const onSelectChange = (value: keyof typeof ControlElementTypes) => {
+  const onSelectChange = (value: ElementType) => {
     setElementType(value);
   };
 
   const getShownElement = () => {
-    if (!elementType) {
-      return null;
-    }
-
-    if (["input", "boolean"].includes(elementType)) {
-      return (
-        <ElementWithDescription uiSchema={uiSchema} elementType={elementType} />
-      );
-    }
-
-    if (["enum"].includes(elementType)) {
-      return <EnumElement uiSchema={uiSchema} />;
+    switch (elementType) {
+      case undefined:
+        return null;
+      case "input":
+      case "boolean":
+      case "number":
+      case "integer":
+        return (
+          <ElementWithDescription
+            uiSchema={uiSchema}
+            elementType={elementType}
+          />
+        );
+      case "enum":
+        return <EnumElement uiSchema={uiSchema} />;
+      default:
+        const exhaustiveCheck: never = elementType;
+        return exhaustiveCheck;
     }
   };
-
   return (
     <div>
       <Select onValueChange={onSelectChange}>
@@ -112,12 +119,18 @@ const ElementWithDescription: FC<{
         resetStates();
       },
       enum: () => {
+        // handled by Enum Component
+      },
+      number: () => {
         handleUiElementAdd({ type: "Control", scope });
-        handleAddElement(scope, {
-          type: "string",
-          description,
-          enum: ["hello", "world", "yes"]
-        });
+        handleAddElement(scope, { type: "number", description });
+
+        resetStates();
+      },
+      integer: () => {
+        handleUiElementAdd({ type: "Control", scope });
+        handleAddElement(scope, { type: "integer", description });
+
         resetStates();
       }
     };

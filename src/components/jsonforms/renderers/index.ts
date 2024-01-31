@@ -9,6 +9,8 @@ import GroupRenderer from "./layout/GroupRenderer";
 import HorizontalLayout from "./layout/HorizontalLayoutRenderer";
 import VerticalLayout from "./layout/VerticalLayoutRenderer";
 
+import NumberRenderer from "@/components/jsonforms/renderers/inputs/NumberRenderer";
+
 const renderers: JsonFormsRendererRegistryEntry[] = [
   GroupRenderer,
   HorizontalLayout,
@@ -17,6 +19,7 @@ const renderers: JsonFormsRendererRegistryEntry[] = [
   CheckboxRendered,
   VerticalLayout,
   TextInput,
+  NumberRenderer,
   EnumRenderer
 ];
 
