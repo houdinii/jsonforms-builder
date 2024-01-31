@@ -67,7 +67,7 @@ export const AddLayoutElement: FC<{
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Select value={value} onValueChange={onSelectChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Add ui element" />

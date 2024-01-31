@@ -62,7 +62,7 @@ export const AddElement: FC<{
     }
   };
   return (
-    <div>
+    <div className="w-full">
       <Select onValueChange={onSelectChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Add control element" />

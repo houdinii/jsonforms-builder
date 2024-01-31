@@ -5,7 +5,6 @@ import {
   type Category,
   isVisible,
   type JsonFormsCore,
-  type Layout,
   type RankedTester,
   rankWith,
   type StatePropsOfLayout,
@@ -16,11 +15,8 @@ import {
   useJsonForms,
   withJsonFormsLayoutProps
 } from "@jsonforms/react";
-import { TabsList } from "@radix-ui/react-tabs";
 
-import { AddCategoryElement } from "../../../AddLayoutElement/AddLayoutElement";
-import { Tabs, TabsContent, TabsTrigger } from "../../../ui/tabs";
-import { type ElementWithBreadcrumbs } from "../types";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export interface CategorizationLayoutRendererProps extends StatePropsOfLayout {
   selected?: number;
@@ -53,8 +49,7 @@ const CategorizationRenderer = (props: CategorizationLayoutRendererProps) => {
   }
 
   return (
-    <div className="bg-slate-50 rounded-md p-5 shadow-around mb-2">
-      <p className="text-slate-400 text-sm">Categorization</p>
+    <div className="rounded-md p-5  mb-2">
       <Tabs defaultValue="0" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           {categories.map(({ label }, idx: number) => (
@@ -76,11 +71,6 @@ const CategorizationRenderer = (props: CategorizationLayoutRendererProps) => {
           );
         })}
       </Tabs>
-      <div className="flex justify-between gap-4 mt-5 w-full">
-        <AddCategoryElement
-          uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
-        />
-      </div>
     </div>
   );
 };

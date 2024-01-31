@@ -1,7 +1,7 @@
 import { JsonForms } from "@jsonforms/react";
 
 import { FormInitializer } from "./FormInitializer/FormInitializer";
-import renderers from "./jsonforms/renderers";
+import { renderersWithControls } from "./jsonforms/renderers";
 import { useFormData } from "./providers/FormDataProvider";
 
 export const RightSide = () => {
@@ -11,16 +11,18 @@ export const RightSide = () => {
     <div>
       <h2 className="text-2xl text-center mb-4 text-slate-50">Form</h2>
       {!!uischema ? (
-        <JsonForms
-          key={JSON.stringify(uischema) + JSON.stringify(schema)}
-          schema={schema}
-          uischema={uischema}
-          data={data}
-          onChange={({ data: newData }) => {
-            changeData(newData);
-          }}
-          renderers={renderers}
-        />
+        <div className="p-5 bg-slate-50 rounded-md">
+          <JsonForms
+            key={JSON.stringify(uischema) + JSON.stringify(schema)}
+            schema={schema}
+            uischema={uischema}
+            data={data}
+            onChange={({ data: newData }) => {
+              changeData(newData);
+            }}
+            renderers={renderersWithControls}
+          />
+        </div>
       ) : (
         <FormInitializer />
       )}
