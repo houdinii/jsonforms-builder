@@ -1,8 +1,9 @@
 import { type FC, useState } from "react";
 
 import { useFormData } from "../providers/FormDataProvider";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+
+import { Button } from "@/components/ui/button";
 
 export const GroupLabel: FC<{
   onGroupAdd?: (groupLabel: string) => void;

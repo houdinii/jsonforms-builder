@@ -8,7 +8,6 @@ import { X } from "lucide-react";
 import { useAddElement, useAddUiElement } from "../jsonforms/hooks/useElements";
 import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
 import { useFormData } from "../providers/FormDataProvider";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
@@ -20,6 +19,7 @@ import {
 } from "../ui/select";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 enum ControlElementTypes {
   input = "Text",

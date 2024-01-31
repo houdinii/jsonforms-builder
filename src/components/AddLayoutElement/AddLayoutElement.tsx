@@ -6,9 +6,9 @@ import { UiElementTypes } from "../FormInitializer/FormInitializer";
 import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
 import { useAddUiElement } from "../jsonforms/hooks/useElements";
 import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
