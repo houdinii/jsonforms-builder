@@ -14,10 +14,10 @@ export const LeftSide = () => {
     <div>
       <h2 className="text-2xl text-center mb-4 text-slate-50">Shapes</h2>
 
-      <Tabs defaultValue="schema" className="w-full">
+      <Tabs defaultValue="uiSchema" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="schema">Schema</TabsTrigger>
           <TabsTrigger value="uiSchema">UiSchema</TabsTrigger>
+          <TabsTrigger value="schema">Schema</TabsTrigger>
           <TabsTrigger value="data">Data</TabsTrigger>
           <TabsTrigger value="form">Clean form</TabsTrigger>
         </TabsList>
