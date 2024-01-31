@@ -1,5 +1,6 @@
 import {
   type ControlElement,
+  type JsonSchema,
   type Layout,
   type UISchemaElement
 } from "@jsonforms/core";
@@ -66,7 +67,7 @@ export const useAddUiElement = (
 export const useAddElement = () => {
   const { changeSchema, schema } = useFormData();
 
-  const handleElementAdd = (scope: string, element: { type: string }) => {
+  const handleElementAdd = (scope: string, element: JsonSchema) => {
     const path = scope.replace("#/", "").replaceAll("/", ".");
 
     const schemaCopy = { ...schema };
