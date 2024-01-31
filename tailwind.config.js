@@ -8,11 +8,7 @@ module.exports = {
     "./src/**/*.{ts,tsx}"
   ],
   prefix: "",
-  purge: {
-    options: {
-      safelist: ["grid-cols-2"]
-    }
-  },
+  safelist: ["grid-cols-2"],
   theme: {
     container: {
       center: true,
