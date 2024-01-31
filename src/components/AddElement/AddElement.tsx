@@ -1,6 +1,7 @@
 import { type ChangeEvent, type FC, useState } from "react";
 
 import { type Layout, toDataPath } from "@jsonforms/core";
+import get from "lodash.get";
 import set from "lodash.set";
 import { X } from "lucide-react";
 
@@ -89,7 +90,7 @@ const ElementWithDescription: FC<{
 
   const handleUiElementAdd = useAddUiElement(uiSchema);
   const handleAddElement = useAddElement();
-  const { changeData, data } = useFormData();
+  const { changeData, data, schema } = useFormData();
 
   const resetStates = () => {
     setDescription(undefined);
@@ -101,6 +102,11 @@ const ElementWithDescription: FC<{
       setScope(ev.target.value);
     }
   };
+
+  const scopeAlreadyExists = !!get(
+    schema,
+    scope.replace("#/", "").replaceAll("/", ".")
+  );
 
   const handleButtonClick = () => {
     if (!scope) {
@@ -161,7 +167,13 @@ const ElementWithDescription: FC<{
         value={scope ?? "#/properties/"}
         placeholder="Scope"
         onChange={handleScopeChange}
+        className="mb-2"
       />
+      {scopeAlreadyExists && (
+        <p className="text-xs text-destructive">
+          The specified scope conflicts with previously added scopes
+        </p>
+      )}
 
       <Label htmlFor="description">Description</Label>
       <Input
@@ -172,7 +184,7 @@ const ElementWithDescription: FC<{
       <Button
         className="w-full mt-4"
         onClick={handleButtonClick}
-        disabled={!/^#\/properties\/.+/.test(scope)}
+        disabled={!/^#\/properties\/.+/.test(scope) || scopeAlreadyExists}
       >
         Add element
       </Button>
@@ -248,6 +260,7 @@ const EnumElement: FC<{
         required
         value={scope ?? "#/properties/"}
         placeholder="Scope"
+        className="mb-2"
         onChange={handleScopeChange}
       />
       <Label htmlFor="description">Description</Label>

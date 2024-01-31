@@ -5,7 +5,6 @@ import { Calendar as CalendarIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -20,8 +19,7 @@ const DateRenderer = ({
   handleChange
 }: Omit<ControlProps, "data"> & { data?: Date }) => (
   <div className="flex flex-col gap-1 mb-2">
-    <Label htmlFor="date">{description}</Label>
-    <Popover id="date">
+    <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -31,7 +29,7 @@ const DateRenderer = ({
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>{description}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

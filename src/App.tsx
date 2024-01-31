@@ -3,21 +3,24 @@ import { FormDataProvider } from "./components/providers/FormDataProvider";
 import { RightSide } from "./components/RightSide";
 import { TooltipProvider } from "./components/ui/tooltip";
 
+import { Footer } from "@/components/Footer/Footer";
+
 function App() {
   return (
-    <div className="min-h-screen w-screen bg-zinc-900 ">
-      <div className="container mx-auto max-w-7xl px-0 flex">
+    <div className=" w-screen bg-zinc-950 ">
+      <div className="container min-h-[calc(100vh-64px)] mx-auto max-w-7xl px-0 flex">
         <FormDataProvider>
           <TooltipProvider>
-            <div className="w-1/2 border-r-2 min-h-screen p-3">
+            <div className="w-1/2 p-3 border-l-white border-r-[0.5px]">
               <LeftSide />
             </div>
-            <div className="w-1/2 min-h-screen p-3">
+            <div className="w-1/2 p-3">
               <RightSide />
             </div>
           </TooltipProvider>
         </FormDataProvider>
       </div>
+      <Footer />
     </div>
   );
 }

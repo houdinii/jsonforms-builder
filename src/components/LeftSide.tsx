@@ -12,7 +12,7 @@ export const LeftSide = () => {
 
   return (
     <div>
-      <h2 className="text-2xl text-center mb-4 text-slate-50">Data</h2>
+      <h2 className="text-2xl text-center mb-4 text-slate-50">Shapes</h2>
 
       <Tabs defaultValue="schema" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
@@ -55,8 +55,8 @@ export const LeftSide = () => {
           />
         </TabsContent>
         <TabsContent value="form">
-          <div className="p-2 bg-slate-50 rounded-sm">
-            {uischema && (
+          {uischema ? (
+            <div className="p-2 bg-slate-50 rounded-sm">
               <JsonForms
                 key={JSON.stringify(uischema) + JSON.stringify(schema)}
                 schema={schema}
@@ -67,8 +67,12 @@ export const LeftSide = () => {
                 }}
                 renderers={renderersWithoutControls}
               />
-            )}
-          </div>
+            </div>
+          ) : (
+            <p className="text-slate-50 text-center">
+              Add elements to your form
+            </p>
+          )}
         </TabsContent>
       </Tabs>
     </div>
