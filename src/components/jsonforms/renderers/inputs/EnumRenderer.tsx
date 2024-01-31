@@ -1,0 +1,41 @@
+import { type ControlProps, isEnumControl, rankWith } from "@jsonforms/core";
+import { withJsonFormsControlProps } from "@jsonforms/react";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+
+const EnumRenderer = ({
+  path,
+  handleChange,
+  description,
+  schema: { enum: enumValues = [] }
+}: Omit<ControlProps, "data"> & { data?: string }) => {
+  return (
+    <div className="flex flex-col gap-1">
+      <Select onValueChange={(selectValue) => handleChange(path, selectValue)}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder={description} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {(enumValues as string[]).map((value) => (
+              <SelectItem value={value}>{value}</SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
+
+const tester = rankWith(2, isEnumControl);
+
+const renderer = withJsonFormsControlProps(EnumRenderer);
+
+export default { tester, renderer };

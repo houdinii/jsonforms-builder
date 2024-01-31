@@ -1,6 +1,7 @@
 import { type JsonFormsRendererRegistryEntry } from "@jsonforms/core";
 
 import CheckboxRendered from "./inputs/CheckboxRendered";
+import EnumRenderer from "./inputs/EnumRenderer";
 import TextInput from "./inputs/TextInput";
 import CategorizationRenderer from "./layout/CategorizationRenderer";
 import CategoryRenderer from "./layout/CategoryRenderer";
@@ -15,7 +16,8 @@ const renderers: JsonFormsRendererRegistryEntry[] = [
   CategoryRenderer,
   CheckboxRendered,
   VerticalLayout,
-  TextInput
+  TextInput,
+  EnumRenderer
 ];
 
 export default renderers;
