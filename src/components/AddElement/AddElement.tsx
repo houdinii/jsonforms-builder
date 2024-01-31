@@ -25,7 +25,8 @@ enum ControlElementTypes {
   number = "Number",
   integer = "Integer",
   boolean = "Checkbox",
-  enum = "Enum"
+  enum = "Enum",
+  date = "Date"
 }
 
 type ElementType = keyof typeof ControlElementTypes;
@@ -46,6 +47,7 @@ export const AddElement: FC<{
       case "boolean":
       case "number":
       case "integer":
+      case "date":
         return (
           <ElementWithDescription
             uiSchema={uiSchema}
@@ -130,6 +132,16 @@ const ElementWithDescription: FC<{
       integer: () => {
         handleUiElementAdd({ type: "Control", scope });
         handleAddElement(scope, { type: "integer", description });
+
+        resetStates();
+      },
+      date: () => {
+        handleUiElementAdd({ type: "Control", scope });
+        handleAddElement(scope, {
+          type: "string",
+          format: "date",
+          description
+        });
 
         resetStates();
       }
