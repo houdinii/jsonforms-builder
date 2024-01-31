@@ -10,7 +10,7 @@ const TextInput = ({
   description,
   handleChange
 }: Omit<ControlProps, "data"> & { data?: string }) => (
-  <div>
+  <div className="mb-2">
     <Label htmlFor="textInput">{description}</Label>
     <Input
       id="textInput"

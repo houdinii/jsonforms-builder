@@ -11,7 +11,7 @@ const CheckboxRenderer = ({
   description
 }: Omit<ControlProps, "data"> & { data?: boolean }) => {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 mb-2">
       <Checkbox
         id="checkbox"
         checked={data}

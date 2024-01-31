@@ -11,6 +11,8 @@ import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 import { AddLayoutElement } from "../../../AddLayoutElement/AddLayoutElement";
 import { type ElementWithBreadcrumbs } from "../types";
 
+import { AddElement } from "@/components/AddElement/AddElement";
+
 const VerticalLayoutRenderer = (props: StatePropsOfLayout) => {
   const { uischema, visible, ...rest } = props;
 
@@ -21,7 +23,9 @@ const VerticalLayoutRenderer = (props: StatePropsOfLayout) => {
   }
 
   return (
-    <div className="bg-slate-50 rounded-md p-5 shadow-around">
+    <div className="bg-slate-50 rounded-md p-5 shadow-around mb-2">
+      <p className="text-slate-400 text-sm">Vertical Layout</p>
+
       {elements.map((child, idx) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
       })}
@@ -29,7 +33,7 @@ const VerticalLayoutRenderer = (props: StatePropsOfLayout) => {
         <AddLayoutElement
           uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
         />
-        {/* <AddElement breadcrumbPath={[...breadcrumbs, elements.length]} /> */}
+        <AddElement uiSchema={uischema as ElementWithBreadcrumbs<Layout>} />
       </div>
     </div>
   );

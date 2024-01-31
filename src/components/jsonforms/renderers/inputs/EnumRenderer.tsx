@@ -17,7 +17,7 @@ const EnumRenderer = ({
   schema: { enum: enumValues = [] }
 }: Omit<ControlProps, "data"> & { data?: string }) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 mb-2">
       <Select onValueChange={(selectValue) => handleChange(path, selectValue)}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={description} />

@@ -53,7 +53,8 @@ const CategorizationRenderer = (props: CategorizationLayoutRendererProps) => {
   }
 
   return (
-    <div className="bg-slate-50 rounded-md p-5 shadow-around">
+    <div className="bg-slate-50 rounded-md p-5 shadow-around mb-2">
+      <p className="text-slate-400 text-sm">Categorization</p>
       <Tabs defaultValue="0" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           {categories.map(({ label }, idx: number) => (

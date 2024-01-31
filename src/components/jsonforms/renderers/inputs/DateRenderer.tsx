@@ -19,7 +19,7 @@ const DateRenderer = ({
   description,
   handleChange
 }: Omit<ControlProps, "data"> & { data?: Date }) => (
-  <div className="flex flex-col gap-1">
+  <div className="flex flex-col gap-1 mb-2">
     <Label htmlFor="date">{description}</Label>
     <Popover id="date">
       <PopoverTrigger asChild>

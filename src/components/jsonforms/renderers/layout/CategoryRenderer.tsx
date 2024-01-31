@@ -11,6 +11,8 @@ import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 import { AddLayoutElement } from "../../../AddLayoutElement/AddLayoutElement";
 import { type ElementWithBreadcrumbs } from "../types";
 
+import { AddElement } from "@/components/AddElement/AddElement";
+
 const CategoryRenderer = (props: StatePropsOfLayout) => {
   const { uischema, visible, ...rest } = props;
 
@@ -22,6 +24,8 @@ const CategoryRenderer = (props: StatePropsOfLayout) => {
 
   return (
     <div className="bg-slate-50 rounded-md p-5 shadow-around">
+      <p className="text-slate-400 text-sm">Category</p>
+
       {label && <h3 className="text-xl text-center">{label}</h3>}
       {elements.map((child, idx) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
@@ -30,6 +34,7 @@ const CategoryRenderer = (props: StatePropsOfLayout) => {
         <AddLayoutElement
           uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
         />
+        <AddElement uiSchema={uischema as ElementWithBreadcrumbs<Layout>} />
       </div>
     </div>
   );

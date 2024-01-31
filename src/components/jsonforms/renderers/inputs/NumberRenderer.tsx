@@ -22,7 +22,7 @@ const NumberInput = ({
   schema: { type },
   handleChange
 }: Omit<ControlProps, "data"> & { data?: number }) => (
-  <div>
+  <div className="mb-2">
     <Label htmlFor="numberInput">{description}</Label>
     <Input
       id="numberInput"

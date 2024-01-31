@@ -24,7 +24,9 @@ const GroupRenderer = (props: StatePropsOfLayout) => {
   }
 
   return (
-    <div className="bg-slate-50 rounded-md p-5 shadow-around">
+    <div className="bg-slate-50 rounded-md p-5 shadow-around mb-2">
+      <p className="text-slate-400 text-sm">Group</p>
+
       {label && <h3 className="text-2xl ">{label}</h3>}
       {elements.map((child) => {
         return (
