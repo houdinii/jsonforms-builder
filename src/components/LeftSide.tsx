@@ -1,11 +1,36 @@
 import { CodeBlock } from "react-code-blocks";
 
+import { type Layout, type UISchemaElement } from "@jsonforms/core";
 import { JsonForms } from "@jsonforms/react";
 
 import { useFormData } from "./providers/FormDataProvider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 import { renderersWithoutControls } from "@/components/jsonforms/renderers";
+import { type ElementWithBreadcrumbs } from "@/components/jsonforms/renderers/types";
+
+const isLayoutElement = (
+  element: Layout | UISchemaElement
+): element is Layout => {
+  return element.hasOwnProperty("elements");
+};
+
+const cleanBreadcrumbs = (
+  uiSchema:
+    | ElementWithBreadcrumbs<Layout | UISchemaElement>
+    | Layout
+    | UISchemaElement
+) => {
+  // @ts-expect-error -- in the name of shipping fast
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { breadcrumbs: _, ...rest } = uiSchema;
+
+  if (isLayoutElement(rest)) {
+    rest.elements = rest.elements.map((element) => cleanBreadcrumbs(element));
+  }
+
+  return rest;
+};
 
 export const LeftSide = () => {
   const { uischema, schema, data, changeData } = useFormData();
@@ -37,7 +62,7 @@ export const LeftSide = () => {
         <TabsContent value="uiSchema">
           {uischema ? (
             <CodeBlock
-              text={JSON.stringify(uischema, null, 2)}
+              text={JSON.stringify(cleanBreadcrumbs(uischema), null, 2)}
               language={"json"}
               showLineNumbers={true}
             />
