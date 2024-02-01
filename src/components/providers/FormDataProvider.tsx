@@ -16,8 +16,10 @@ interface IFormDataContext {
   schema: JsonFormsCore["schema"] | undefined;
   uischema: Layout | undefined;
   changeData: (newData: JsonFormsCore["data"]) => void;
-  changeSchema: (newSchema: JsonFormsCore["schema"]) => void;
-  changeUiSchema: (newUiSchema: ElementWithBreadcrumbs<Layout>) => void;
+  changeSchema: (newSchema: JsonFormsCore["schema"] | undefined) => void;
+  changeUiSchema: (
+    newUiSchema: ElementWithBreadcrumbs<Layout> | undefined
+  ) => void;
 }
 
 const FormDataContext = React.createContext<IFormDataContext | null>(null);
@@ -28,15 +30,18 @@ export const FormDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [data, setData] = useState<IFormDataContext["data"]>({});
 
   const changeUiSchema = useCallback(
-    (newUiSchema: IFormDataContext["uischema"]) => {
+    (newUiSchema: IFormDataContext["uischema"] | undefined) => {
       setUiSchema(newUiSchema);
     },
     []
   );
 
-  const changeSchema = useCallback((newSchema: IFormDataContext["schema"]) => {
-    setSchema(newSchema);
-  }, []);
+  const changeSchema = useCallback(
+    (newSchema: IFormDataContext["schema"] | undefined) => {
+      setSchema(newSchema);
+    },
+    []
+  );
 
   const changeData = useCallback((newData: IFormDataContext["data"]) => {
     setData(newData);

@@ -29,7 +29,7 @@ const CategoryRenderer = (props: StatePropsOfLayout) => {
       {elements.map((child, idx) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
       })}
-      <div className="flex justify-between gap-4 mt-5 w-full">
+      <div className="flex justify-between gap-4 mt-5 w-full flex-wrap">
         <AddLayoutElement
           uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
         />

@@ -10,6 +10,8 @@ import set from "lodash.set";
 import { useFormData } from "../../providers/FormDataProvider";
 import { type ElementWithBreadcrumbs } from "../renderers/types";
 
+import { getPathFromBreadcrumbs } from "@/lib/utils";
+
 type UiSchemaElement = UISchemaElement | Layout;
 
 export const useAddUiElement = (
@@ -19,11 +21,7 @@ export const useAddUiElement = (
     parentElement;
   const { changeUiSchema, uischema } = useFormData();
 
-  const path = `elements${
-    parentBreadcrumbs?.length
-      ? `[${parentBreadcrumbs.join("].elements[")}]`
-      : ""
-  }`;
+  const path = getPathFromBreadcrumbs(parentBreadcrumbs);
 
   const handleElementAdd = (
     element: (UiSchemaElement & { label?: string }) | ControlElement

@@ -38,14 +38,10 @@ const GroupRenderer = (props: StatePropsOfLayout) => {
         );
       })}
       <div className="flex justify-between gap-4 mt-5 w-full">
-        <div className="w-1/2">
-          <AddLayoutElement
-            uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
-          />
-        </div>
-        <div className="w-1/2">
-          <AddElement uiSchema={uischema as ElementWithBreadcrumbs<Layout>} />
-        </div>
+        <AddLayoutElement
+          uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
+        />
+        <AddElement uiSchema={uischema as ElementWithBreadcrumbs<Layout>} />
       </div>
     </div>
   );

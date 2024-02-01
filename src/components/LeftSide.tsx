@@ -62,7 +62,7 @@ export const LeftSide = () => {
         <TabsContent value="uiSchema">
           {uischema ? (
             <CodeBlock
-              text={JSON.stringify(cleanBreadcrumbs(uischema), null, 2)}
+              text={JSON.stringify(uischema, null, 2)}
               language={"json"}
               showLineNumbers={true}
             />
