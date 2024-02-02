@@ -1,62 +1,53 @@
 import {
   type ControlElement,
+  isControl,
   type JsonSchema,
   type Layout,
   type UISchemaElement
 } from "@jsonforms/core";
-import get from "lodash.get";
 import set from "lodash.set";
 
 import { useFormData } from "../../providers/FormDataProvider";
-import { type ElementWithBreadcrumbs } from "../renderers/types";
 
-import { getPathFromBreadcrumbs } from "@/lib/utils";
+const addElementToLayout = (
+  uiElement: Layout,
+  elementToAdd: Layout,
+  parentElement: Layout
+): Layout => {
+  if (!isControl(uiElement) && uiElement.elements.length) {
+    return {
+      ...uiElement,
+      elements: (uiElement === parentElement
+        ? [...uiElement.elements, elementToAdd]
+        : uiElement.elements.map((el) =>
+            addElementToLayout(el as Layout, elementToAdd, parentElement)
+          )) as UISchemaElement[]
+    };
+  }
 
-type UiSchemaElement = UISchemaElement | Layout;
+  return {
+    ...uiElement,
+    elements: uiElement === parentElement ? [elementToAdd] : []
+  };
+};
 
-export const useAddUiElement = (
-  parentElement: ElementWithBreadcrumbs<Layout>
-) => {
-  const { breadcrumbs: parentBreadcrumbs, elements: parentElements } =
-    parentElement;
+export const useAddUiElement = (parentElement: Layout) => {
   const { changeUiSchema, uischema } = useFormData();
 
-  const path = getPathFromBreadcrumbs(parentBreadcrumbs);
+  const handleElementAdd = (element: Layout | ControlElement) => {
+    if (!uischema) {
+      changeUiSchema(element);
 
-  const handleElementAdd = (
-    element: (UiSchemaElement & { label?: string }) | ControlElement
-  ) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const uiSchemaCopy = { ...uischema! };
-    const { elements } = get(
-      uiSchemaCopy,
-      path
-    ) as ElementWithBreadcrumbs<Layout>;
+      return;
+    }
 
-    set(
-      uiSchemaCopy,
-      path,
-      path === "elements"
-        ? [
-            ...parentElements,
-            {
-              ...element,
-              breadcrumbs: [...parentBreadcrumbs, parentElements.length]
-            }
-          ]
-        : {
-            ...parentElement,
-            elements: [
-              ...(elements ?? parentElements),
-              {
-                ...element,
-                breadcrumbs: [...parentBreadcrumbs, parentElements.length]
-              }
-            ]
-          }
+    const newCopy = addElementToLayout(
+      uischema as Layout,
+      element as Layout, // it's simpler to cast than to bother with the types
+      parentElement
     );
 
-    changeUiSchema({ ...uiSchemaCopy } as ElementWithBreadcrumbs<Layout>);
+    changeUiSchema(newCopy);
   };
 
   return handleElementAdd;

@@ -7,30 +7,30 @@ import React, {
   useState
 } from "react";
 
-import { type JsonFormsCore, type Layout } from "@jsonforms/core";
-
-import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
+import {
+  type ControlElement,
+  type JsonFormsCore,
+  type Layout
+} from "@jsonforms/core";
 
 interface IFormDataContext {
   data: Record<string, unknown>;
   schema: JsonFormsCore["schema"] | undefined;
-  uischema: Layout | undefined;
+  uischema: Layout | ControlElement | undefined;
   changeData: (newData: JsonFormsCore["data"]) => void;
   changeSchema: (newSchema: JsonFormsCore["schema"] | undefined) => void;
-  changeUiSchema: (
-    newUiSchema: ElementWithBreadcrumbs<Layout> | undefined
-  ) => void;
+  changeUiSchema: (newUiSchema: Layout | ControlElement | undefined) => void;
 }
 
 const FormDataContext = React.createContext<IFormDataContext | null>(null);
 
 export const FormDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [schema, setSchema] = useState<IFormDataContext["schema"]>();
-  const [uischema, setUiSchema] = useState<IFormDataContext["uischema"]>();
+  const [uischema, setUiSchema] = useState<Layout | ControlElement>();
   const [data, setData] = useState<IFormDataContext["data"]>({});
 
   const changeUiSchema = useCallback(
-    (newUiSchema: IFormDataContext["uischema"] | undefined) => {
+    (newUiSchema: Layout | ControlElement | undefined) => {
       setUiSchema(newUiSchema);
     },
     []

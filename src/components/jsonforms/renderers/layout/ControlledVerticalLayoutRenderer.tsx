@@ -8,12 +8,11 @@ import {
 import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 
 import { AddLayoutElement } from "../../../AddLayoutElement/AddLayoutElement";
-import { type ElementWithBreadcrumbs } from "../types";
 
 import { AddElement } from "@/components/AddElement/AddElement";
 
 const VerticalLayoutRenderer = (
-  props: StatePropsOfLayout & { uischema: ElementWithBreadcrumbs<Layout> }
+  props: StatePropsOfLayout & { uischema: Layout }
 ) => {
   const { uischema, visible, ...rest } = props;
   const { elements } = uischema;

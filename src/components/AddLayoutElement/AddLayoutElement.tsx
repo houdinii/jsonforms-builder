@@ -1,11 +1,10 @@
 import { type FC, useState } from "react";
 
-import { type Layout } from "@jsonforms/core";
+import { type Categorization, type Layout } from "@jsonforms/core";
 
 import { UiElementTypes } from "../FormInitializer/FormInitializer";
 import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
 import { useAddUiElement } from "../jsonforms/hooks/useElements";
-import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
 import { Input } from "../ui/input";
 
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,7 @@ import {
 } from "@/components/ui/select";
 
 export const AddLayoutElement: FC<{
-  uiSchema: ElementWithBreadcrumbs<Layout>;
+  uiSchema: Layout;
 }> = ({ uiSchema: parentUiSchema }) => {
   const [value, setValue] = useState<string>();
   const [addingElement, setAddingElement] = useState(false);
@@ -86,7 +85,7 @@ export const AddLayoutElement: FC<{
 };
 
 export const AddCategoryElement: FC<{
-  uiSchema: ElementWithBreadcrumbs<Layout>;
+  uiSchema: Categorization;
 }> = ({ uiSchema }) => {
   const [value, setValue] = useState("");
 

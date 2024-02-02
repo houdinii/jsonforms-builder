@@ -1,36 +1,13 @@
 import { CodeBlock } from "react-code-blocks";
 
-import { type Layout, type UISchemaElement } from "@jsonforms/core";
 import { JsonForms } from "@jsonforms/react";
 
 import { useFormData } from "./providers/FormDataProvider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 import { renderersWithoutControls } from "@/components/jsonforms/renderers";
-import { type ElementWithBreadcrumbs } from "@/components/jsonforms/renderers/types";
-
-const isLayoutElement = (
-  element: Layout | UISchemaElement
-): element is Layout => {
-  return element.hasOwnProperty("elements");
-};
-
-const cleanBreadcrumbs = (
-  uiSchema:
-    | ElementWithBreadcrumbs<Layout | UISchemaElement>
-    | Layout
-    | UISchemaElement
-) => {
-  // @ts-expect-error -- in the name of shipping fast
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { breadcrumbs: _, ...rest } = uiSchema;
-
-  if (isLayoutElement(rest)) {
-    rest.elements = rest.elements.map((element) => cleanBreadcrumbs(element));
-  }
-
-  return rest;
-};
+import { SchemaCodeBlock } from "@/components/SchemaCodeBlock/SchemaCodeBlock";
+import { UiSchemaCodeBlock } from "@/components/UiSchemaCodeBlock/UiSchemaCodeBlock";
 
 export const LeftSide = () => {
   const { uischema, schema, data, changeData } = useFormData();
@@ -48,11 +25,7 @@ export const LeftSide = () => {
         </TabsList>
         <TabsContent value="schema">
           {schema ? (
-            <CodeBlock
-              text={JSON.stringify(schema, null, 2)}
-              language={"json"}
-              showLineNumbers={true}
-            />
+            <SchemaCodeBlock key={JSON.stringify(schema)} />
           ) : (
             <p className="text-slate-50 text-center">
               Add a schema element to your form
@@ -61,11 +34,7 @@ export const LeftSide = () => {
         </TabsContent>
         <TabsContent value="uiSchema">
           {uischema ? (
-            <CodeBlock
-              text={JSON.stringify(uischema, null, 2)}
-              language={"json"}
-              showLineNumbers={true}
-            />
+            <UiSchemaCodeBlock key={JSON.stringify(uischema)} />
           ) : (
             <p className="text-slate-50 text-center">
               Add a ui element to your form

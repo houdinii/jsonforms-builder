@@ -11,7 +11,6 @@ import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 
 import { AddElement } from "../../../AddElement/AddElement";
 import { AddLayoutElement } from "../../../AddLayoutElement/AddLayoutElement";
-import { type ElementWithBreadcrumbs } from "../types";
 
 const GroupRenderer = (props: StatePropsOfLayout) => {
   const { uischema, visible, ...rest } = props;
@@ -38,10 +37,8 @@ const GroupRenderer = (props: StatePropsOfLayout) => {
         );
       })}
       <div className="flex justify-between gap-4 mt-5 w-full">
-        <AddLayoutElement
-          uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
-        />
-        <AddElement uiSchema={uischema as ElementWithBreadcrumbs<Layout>} />
+        <AddLayoutElement uiSchema={uischema as Layout} />
+        <AddElement uiSchema={uischema as Layout} />
       </div>
     </div>
   );

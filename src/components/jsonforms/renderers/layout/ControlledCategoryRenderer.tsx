@@ -9,7 +9,6 @@ import {
 import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 
 import { AddLayoutElement } from "../../../AddLayoutElement/AddLayoutElement";
-import { type ElementWithBreadcrumbs } from "../types";
 
 import { AddElement } from "@/components/AddElement/AddElement";
 
@@ -30,10 +29,8 @@ const CategoryRenderer = (props: StatePropsOfLayout) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
       })}
       <div className="flex justify-between gap-4 mt-5 w-full flex-wrap">
-        <AddLayoutElement
-          uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
-        />
-        <AddElement uiSchema={uischema as ElementWithBreadcrumbs<Layout>} />
+        <AddLayoutElement uiSchema={uischema as Layout} />
+        <AddElement uiSchema={uischema as Layout} />
       </div>
     </div>
   );

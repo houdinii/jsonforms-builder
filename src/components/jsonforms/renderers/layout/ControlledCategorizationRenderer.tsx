@@ -5,7 +5,6 @@ import {
   type Category,
   isVisible,
   type JsonFormsCore,
-  type Layout,
   type RankedTester,
   rankWith,
   type StatePropsOfLayout,
@@ -19,7 +18,6 @@ import {
 
 import { AddCategoryElement } from "../../../AddLayoutElement/AddLayoutElement";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../ui/tabs";
-import { type ElementWithBreadcrumbs } from "../types";
 
 export interface CategorizationLayoutRendererProps extends StatePropsOfLayout {
   selected?: number;
@@ -76,9 +74,7 @@ const CategorizationRenderer = (props: CategorizationLayoutRendererProps) => {
         })}
       </Tabs>
       <div className="flex justify-between gap-4 mt-5 w-full">
-        <AddCategoryElement
-          uiSchema={uischema as ElementWithBreadcrumbs<Layout>}
-        />
+        <AddCategoryElement uiSchema={uischema as Categorization} />
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ function App() {
           </TooltipProvider>
         </FormDataProvider>
       </div>
+
       <Footer />
     </div>
   );

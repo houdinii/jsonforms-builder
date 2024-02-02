@@ -5,9 +5,3 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const getPathFromBreadcrumbs = (breadcrumbs: number[]) => {
-  return `elements${
-    breadcrumbs?.length ? `[${breadcrumbs.join("].elements[")}]` : ""
-  }`;
-};
-

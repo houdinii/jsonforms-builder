@@ -17,6 +17,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -24,10 +25,12 @@
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
     "lucide-react": "^0.316.0",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-code-blocks": "^0.1.6",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0",
+    "react-simple-code-editor": "^0.13.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -36,6 +39,7 @@
     "@types/lodash.get": "^4.4.9",
     "@types/lodash.set": "^4.3.9",
     "@types/node": "^20.11.10",
+    "@types/prismjs": "^1.26.3",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
@@ -55,4 +59,3 @@
     "vite": "^3.1.0"
   }
 }
-

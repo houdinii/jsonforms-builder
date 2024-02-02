@@ -6,7 +6,6 @@ import set from "lodash.set";
 import { X } from "lucide-react";
 
 import { useAddElement, useAddUiElement } from "../jsonforms/hooks/useElements";
-import { type ElementWithBreadcrumbs } from "../jsonforms/renderers/types";
 import { useFormData } from "../providers/FormDataProvider";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -32,7 +31,7 @@ enum ControlElementTypes {
 
 type ElementType = keyof typeof ControlElementTypes;
 export const AddElement: FC<{
-  uiSchema: ElementWithBreadcrumbs<Layout>;
+  uiSchema: Layout;
 }> = ({ uiSchema }) => {
   const [elementType, setElementType] = useState<ElementType>();
 
@@ -83,7 +82,7 @@ export const AddElement: FC<{
 
 const ElementWithDescription: FC<{
   elementType: keyof typeof ControlElementTypes | undefined;
-  uiSchema: ElementWithBreadcrumbs<Layout>;
+  uiSchema: Layout;
 }> = ({ elementType, uiSchema }) => {
   const [scope, setScope] = useState<string>("#/properties/");
   const [description, setDescription] = useState<string>();
@@ -193,7 +192,7 @@ const ElementWithDescription: FC<{
 };
 
 const EnumElement: FC<{
-  uiSchema: ElementWithBreadcrumbs<Layout>;
+  uiSchema: Layout;
 }> = ({ uiSchema }) => {
   const [description, setDescription] = useState<string>();
   const [scope, setScope] = useState<string>("#/properties/");
