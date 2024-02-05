@@ -1,5 +1,7 @@
 import { type FC, useState } from "react";
 
+import { type Layout } from "@jsonforms/core";
+
 import { useFormData } from "../providers/FormDataProvider";
 import { Input } from "../ui/input";
 
@@ -17,11 +19,9 @@ export const GroupLabel: FC<{
     (() => {
       changeUiSchema({
         type: "Group",
-        // @ts-expect-error -- json forms types
         label: groupLabel,
-        elements: [],
-        breadcrumbs: []
-      });
+        elements: []
+      } as Layout);
     });
 
   return (

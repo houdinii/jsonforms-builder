@@ -28,15 +28,13 @@ export const FormInitializer = () => {
       horizontal: () => {
         changeUiSchema({
           type: "HorizontalLayout",
-          elements: [],
-          breadcrumbs: []
+          elements: []
         });
       },
       vertical: () => {
         changeUiSchema({
           type: "VerticalLayout",
-          elements: [],
-          breadcrumbs: []
+          elements: []
         });
       },
       group: () => {
@@ -45,8 +43,7 @@ export const FormInitializer = () => {
       categorization: () => {
         changeUiSchema({
           type: "Categorization",
-          elements: [],
-          breadcrumbs: []
+          elements: []
         });
       }
     };

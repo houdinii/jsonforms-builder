@@ -31,6 +31,22 @@ const addElementToLayout = (
   };
 };
 
+const removeElementFromLayout = (
+  uiElement: Layout,
+  elementToRemove: Layout
+): Layout | undefined => {
+  if (elementToRemove === uiElement) {
+    return undefined;
+  }
+
+  return {
+    ...uiElement,
+    elements: uiElement.elements
+      .map((el) => removeElementFromLayout(el as Layout, elementToRemove))
+      .filter(Boolean) as UISchemaElement[]
+  };
+};
+
 export const useAddUiElement = (parentElement: Layout) => {
   const { changeUiSchema, uischema } = useFormData();
 
@@ -67,4 +83,25 @@ export const useAddElement = () => {
   };
 
   return handleElementAdd;
+};
+
+export const useDeleteUiElement = () => {
+  const { changeUiSchema, uischema } = useFormData();
+
+  const handleElementRemove = (elementToDelete: Layout | ControlElement) => {
+    if (!uischema) {
+      changeUiSchema(elementToDelete);
+
+      return;
+    }
+
+    const newCopy = removeElementFromLayout(
+      uischema as Layout,
+      elementToDelete as Layout // it's simpler to cast than to bother with the types
+    );
+
+    changeUiSchema(newCopy);
+  };
+
+  return handleElementRemove;
 };
