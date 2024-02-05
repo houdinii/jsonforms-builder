@@ -1,13 +1,13 @@
 import {
   type Category,
+  type LayoutProps,
   type RankedTester,
   rankWith,
-  type StatePropsOfLayout,
   uiTypeIs
 } from "@jsonforms/core";
 import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 
-const CategoryRenderer = (props: StatePropsOfLayout) => {
+const CategoryRenderer = (props: LayoutProps) => {
   const { uischema, visible, ...rest } = props;
 
   const { elements, label } = uischema as Category;
@@ -31,7 +31,11 @@ const categorizationRendererTester: RankedTester = rankWith(
   uiTypeIs("Category")
 );
 
+const renderer = withJsonFormsLayoutProps(CategoryRenderer);
+
+renderer.displayName = "Category";
+
 export default {
-  tester: categorizationRendererTester,
-  renderer: withJsonFormsLayoutProps(CategoryRenderer)
+  renderer,
+  tester: categorizationRendererTester
 };

@@ -12,7 +12,7 @@ import { useFormData } from "../../providers/FormDataProvider";
 const addElementToLayout = (
   uiElement: Layout,
   elementToAdd: Layout,
-  parentElement: Layout
+  parentElement: Layout | ControlElement
 ): Layout => {
   if (!isControl(uiElement) && uiElement.elements.length) {
     return {
@@ -47,7 +47,7 @@ const removeElementFromLayout = (
   };
 };
 
-export const useAddUiElement = (parentElement: Layout) => {
+export const useAddUiElement = (parentElement: Layout | ControlElement) => {
   const { changeUiSchema, uischema } = useFormData();
 
   const handleElementAdd = (element: Layout | ControlElement) => {

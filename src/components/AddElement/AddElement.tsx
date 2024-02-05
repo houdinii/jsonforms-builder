@@ -1,6 +1,6 @@
 import { type ChangeEvent, type FC, useState } from "react";
 
-import { type Layout, toDataPath } from "@jsonforms/core";
+import { type ControlElement, type Layout, toDataPath } from "@jsonforms/core";
 import get from "lodash.get";
 import set from "lodash.set";
 import { X } from "lucide-react";
@@ -31,7 +31,7 @@ enum ControlElementTypes {
 
 type ElementType = keyof typeof ControlElementTypes;
 export const AddElement: FC<{
-  uiSchema: Layout;
+  uiSchema: Layout | ControlElement;
 }> = ({ uiSchema }) => {
   const [elementType, setElementType] = useState<ElementType>();
 
@@ -82,7 +82,7 @@ export const AddElement: FC<{
 
 const ElementWithDescription: FC<{
   elementType: keyof typeof ControlElementTypes | undefined;
-  uiSchema: Layout;
+  uiSchema: Layout | ControlElement;
 }> = ({ elementType, uiSchema }) => {
   const [scope, setScope] = useState<string>("#/properties/");
   const [description, setDescription] = useState<string>();
@@ -192,7 +192,7 @@ const ElementWithDescription: FC<{
 };
 
 const EnumElement: FC<{
-  uiSchema: Layout;
+  uiSchema: Layout | ControlElement;
 }> = ({ uiSchema }) => {
   const [description, setDescription] = useState<string>();
   const [scope, setScope] = useState<string>("#/properties/");

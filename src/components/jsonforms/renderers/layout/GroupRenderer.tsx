@@ -1,14 +1,14 @@
 import {
   type GroupLayout,
   type LabelDescription,
+  type LayoutProps,
   type RankedTester,
   rankWith,
-  type StatePropsOfLayout,
   uiTypeIs
 } from "@jsonforms/core";
 import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 
-const GroupRenderer = (props: StatePropsOfLayout) => {
+const GroupRenderer = (props: LayoutProps) => {
   const { uischema, visible, ...rest } = props;
 
   const group = uischema as GroupLayout & LabelDescription;
@@ -39,7 +39,11 @@ const categorizationRendererTester: RankedTester = rankWith(
   uiTypeIs("Group")
 );
 
+const renderer = withJsonFormsLayoutProps(GroupRenderer);
+
+renderer.displayName = "Group";
+
 export default {
   tester: categorizationRendererTester,
-  renderer: withJsonFormsLayoutProps(GroupRenderer)
+  renderer
 };

@@ -22,6 +22,7 @@ const toInteger = (value: string) =>
 const NumberInput = ({
   data,
   path,
+  visible,
   description,
   schema: { type },
   handleChange
@@ -43,6 +44,10 @@ const NumberInput = ({
     handleChange(path, undefined);
   }, [debouncedValue, handleChange, path, type]);
 
+  if (!visible) {
+    return null;
+  }
+
   return (
     <div className="mb-2">
       <Label htmlFor="numberInput">{description}</Label>
@@ -62,5 +67,7 @@ const NumberInput = ({
 const tester = rankWith(2, or(isNumberControl, isIntegerControl));
 
 const renderer = withJsonFormsControlProps(NumberInput);
+
+renderer.displayName = "Number Input";
 
 export default { tester, renderer };

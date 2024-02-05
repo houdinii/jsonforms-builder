@@ -1,6 +1,10 @@
 import { type FC, useState } from "react";
 
-import { type Categorization, type Layout } from "@jsonforms/core";
+import {
+  type Categorization,
+  type ControlElement,
+  type Layout
+} from "@jsonforms/core";
 
 import { UiElementTypes } from "../FormInitializer/FormInitializer";
 import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
@@ -17,7 +21,7 @@ import {
 } from "@/components/ui/select";
 
 export const AddLayoutElement: FC<{
-  uiSchema: Layout;
+  uiSchema: Layout | ControlElement;
 }> = ({ uiSchema: parentUiSchema }) => {
   const [value, setValue] = useState<string>();
   const [addingElement, setAddingElement] = useState(false);
@@ -58,6 +62,7 @@ export const AddLayoutElement: FC<{
   const handleGroupAdd = (groupLabel: string) => {
     handleUiElementAdd({
       type: "Group",
+      // @ts-expect-error -- json forms types are confuusing
       label: groupLabel,
       elements: []
     });
@@ -94,6 +99,7 @@ export const AddCategoryElement: FC<{
   const handleButtonClick = () => {
     handleUiElementAdd({
       type: "Category",
+      // @ts-expect-error -- json forms types are confuusing
       label: value,
       elements: []
     });

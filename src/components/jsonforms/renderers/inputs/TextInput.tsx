@@ -11,6 +11,7 @@ import { useDebounce } from "@/lib/hooks/useDebounce";
 const TextInput = ({
   data = "",
   path,
+  visible,
   description,
   handleChange
 }: Omit<ControlProps, "data"> & { data?: string }) => {
@@ -21,6 +22,10 @@ const TextInput = ({
   useEffect(() => {
     handleChange(path, debouncedValue);
   }, [debouncedValue, handleChange, path]);
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <div className="mb-2">
@@ -38,5 +43,7 @@ const TextInput = ({
 const tester = rankWith(1, isControl);
 
 const renderer = withJsonFormsControlProps(TextInput);
+
+renderer.displayName = "Text Input";
 
 export default { tester, renderer };

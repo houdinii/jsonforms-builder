@@ -1,13 +1,13 @@
 import {
   type HorizontalLayout,
+  type LayoutProps,
   type RankedTester,
   rankWith,
-  type StatePropsOfLayout,
   uiTypeIs
 } from "@jsonforms/core";
 import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
 
-const HorizontalLayoutRenderer = (props: StatePropsOfLayout) => {
+const HorizontalLayoutRenderer = (props: LayoutProps) => {
   const { uischema, visible, ...rest } = props;
 
   const { elements } = uischema as HorizontalLayout;
@@ -35,7 +35,11 @@ const categorizationRendererTester: RankedTester = rankWith(
   uiTypeIs("HorizontalLayout")
 );
 
+const renderer = withJsonFormsLayoutProps(HorizontalLayoutRenderer);
+
+renderer.displayName = "Horizontal Layout";
+
 export default {
   tester: categorizationRendererTester,
-  renderer: withJsonFormsLayoutProps(HorizontalLayoutRenderer)
+  renderer
 };

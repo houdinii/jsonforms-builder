@@ -4,10 +4,9 @@ import {
   type Categorization,
   type Category,
   isVisible,
-  type JsonFormsCore,
+  type LayoutProps,
   type RankedTester,
   rankWith,
-  type StatePropsOfLayout,
   uiTypeIs
 } from "@jsonforms/core";
 import {
@@ -18,16 +17,8 @@ import {
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export interface CategorizationLayoutRendererProps extends StatePropsOfLayout {
-  selected?: number;
-  ownState?: boolean;
-  ajv: JsonFormsCore["ajv"];
-  data?: unknown;
-  onChange?(selected: number, prevSelected: number): void;
-}
-
-const CategorizationRenderer = (props: CategorizationLayoutRendererProps) => {
-  const { uischema, visible, data, schema, ...rest } = props;
+const CategorizationRenderer = (props: LayoutProps) => {
+  const { uischema, visible, schema, ...rest } = props;
   const { core: { ajv } = {} } = useJsonForms();
 
   const categorization = uischema as Categorization;
@@ -39,9 +30,9 @@ const CategorizationRenderer = (props: CategorizationLayoutRendererProps) => {
           return false;
         }
 
-        return isVisible(category, data, "", ajv);
+        return isVisible(category, props.data, "", ajv);
       }),
-    [categorization?.elements, ajv, data]
+    [categorization?.elements, ajv, props.data]
   );
 
   if (!visible) {
@@ -80,7 +71,11 @@ const categorizationRendererTester: RankedTester = rankWith(
   uiTypeIs("Categorization")
 );
 
+const renderer = withJsonFormsLayoutProps(CategorizationRenderer);
+
+renderer.displayName = "Categorization Layout";
+
 export default {
-  tester: categorizationRendererTester,
-  renderer: withJsonFormsLayoutProps(CategorizationRenderer)
+  renderer,
+  tester: categorizationRendererTester
 };

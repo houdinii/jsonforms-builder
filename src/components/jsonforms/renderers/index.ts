@@ -3,29 +3,20 @@ import { type JsonFormsRendererRegistryEntry } from "@jsonforms/core";
 import CheckboxRendered from "./inputs/CheckboxRendered";
 import EnumRenderer from "./inputs/EnumRenderer";
 import TextInput from "./inputs/TextInput";
-import ControlledCategorizationRenderer from "./layout/ControlledCategorizationRenderer";
-import ControlledCategoryRenderer from "./layout/ControlledCategoryRenderer";
-import ControlledGroupRenderer from "./layout/ControlledGroupRenderer";
-import ControlledHorizontalLayout from "./layout/ControlledHorizontalLayoutRenderer";
-import ControlledVerticalLayout from "./layout/ControlledVerticalLayoutRenderer";
 
 import DateRenderer from "@/components/jsonforms/renderers/inputs/DateRenderer";
 import NumberRenderer from "@/components/jsonforms/renderers/inputs/NumberRenderer";
-import CategorizationRenderer from "@/components/jsonforms/renderers/layout/withoutControls/CategorizationRenderer";
-import CategoryRenderer from "@/components/jsonforms/renderers/layout/withoutControls/CategoryRenderer";
-import GroupRenderer from "@/components/jsonforms/renderers/layout/withoutControls/GroupRenderer";
-import HorizontalLayoutRenderer from "@/components/jsonforms/renderers/layout/withoutControls/HorizontalLayoutRenderer";
-import VerticalLayoutRenderer from "@/components/jsonforms/renderers/layout/withoutControls/VerticalLayoutRenderer";
+import CategorizationRenderer from "@/components/jsonforms/renderers/layout/CategorizationRenderer";
+import CategoryRenderer from "@/components/jsonforms/renderers/layout/CategoryRenderer";
+import GroupRenderer from "@/components/jsonforms/renderers/layout/GroupRenderer";
+import HorizontalLayoutRenderer from "@/components/jsonforms/renderers/layout/HorizontalLayoutRenderer";
+import VerticalLayoutRenderer from "@/components/jsonforms/renderers/layout/VerticalLayoutRenderer";
+import {
+  withElementControls,
+  withLayoutControls
+} from "@/components/jsonforms/renderers/withControls";
 
-const uiRenderersWithControls = [
-  ControlledCategorizationRenderer,
-  ControlledCategoryRenderer,
-  ControlledGroupRenderer,
-  ControlledHorizontalLayout,
-  ControlledVerticalLayout
-];
-
-const uiRenderersWithoutControls = [
+const uiRenderers = [
   VerticalLayoutRenderer,
   HorizontalLayoutRenderer,
   CategorizationRenderer,
@@ -41,13 +32,23 @@ const elementRenderers = [
   EnumRenderer
 ];
 
+const elementRenderersWithControls = elementRenderers.map((el) => ({
+  ...el,
+  renderer: withElementControls(el.renderer)
+}));
+
+const uiRenderersWithControls = uiRenderers.map((el) => ({
+  ...el,
+  renderer: withLayoutControls(el.renderer)
+}));
+
 export const renderersWithControls: JsonFormsRendererRegistryEntry[] = [
-  ...elementRenderers,
+  ...elementRenderersWithControls,
   ...uiRenderersWithControls
 ];
 
 export const renderersWithoutControls: JsonFormsRendererRegistryEntry[] = [
-  ...uiRenderersWithoutControls,
+  ...uiRenderers,
   ...elementRenderers
 ];
 

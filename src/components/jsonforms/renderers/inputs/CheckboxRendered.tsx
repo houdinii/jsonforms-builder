@@ -6,10 +6,15 @@ import { Label } from "../../../ui/label";
 
 const CheckboxRenderer = ({
   data = false,
+  visible,
   path,
   handleChange,
   description
 }: Omit<ControlProps, "data"> & { data?: boolean }) => {
+  if (!visible) {
+    return null;
+  }
+
   return (
     <div className="flex items-center space-x-2 mb-2">
       <Checkbox
@@ -25,5 +30,7 @@ const CheckboxRenderer = ({
 const tester = rankWith(1, isBooleanControl);
 
 const renderer = withJsonFormsControlProps(CheckboxRenderer);
+
+renderer.displayName = "Checkbox Input";
 
 export default { tester, renderer };

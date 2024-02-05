@@ -12,10 +12,15 @@ import {
 
 const EnumRenderer = ({
   path,
+  visible,
   handleChange,
   description,
   schema: { enum: enumValues = [] }
 }: Omit<ControlProps, "data"> & { data?: string }) => {
+  if (!visible) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col gap-1 mb-2">
       <Select onValueChange={(selectValue) => handleChange(path, selectValue)}>
@@ -37,5 +42,7 @@ const EnumRenderer = ({
 const tester = rankWith(2, isEnumControl);
 
 const renderer = withJsonFormsControlProps(EnumRenderer);
+
+renderer.displayName = "Enum Input";
 
 export default { tester, renderer };
