@@ -10,7 +10,7 @@ const CheckboxRenderer = ({
   path,
   handleChange,
   description
-}: Omit<ControlProps, "data"> & { data?: boolean }) => {
+}: ControlProps) => {
   if (!visible) {
     return null;
   }
@@ -19,7 +19,7 @@ const CheckboxRenderer = ({
     <div className="flex items-center space-x-2 mb-2">
       <Checkbox
         id="checkbox"
-        checked={data}
+        checked={data as boolean}
         onCheckedChange={(checked) => handleChange(path, checked)}
       />
       <Label htmlFor="checkbox">{description}</Label>
@@ -31,6 +31,6 @@ const tester = rankWith(1, isBooleanControl);
 
 const renderer = withJsonFormsControlProps(CheckboxRenderer);
 
-renderer.displayName = "Checkbox Input";
+CheckboxRenderer.displayName = "Checkbox Input";
 
-export default { tester, renderer };
+export default { tester, renderer, noPropsRenderer: CheckboxRenderer };

@@ -3,8 +3,8 @@ import { type ComponentType } from "react";
 import {
   type Categorization,
   type ControlElement,
-  type LayoutProps,
-  type OwnPropsOfControl
+  type ControlProps,
+  type LayoutProps
 } from "@jsonforms/core";
 import { X } from "lucide-react";
 
@@ -21,9 +21,9 @@ import {
 } from "@/components/ui/tooltip";
 
 export const withElementControls = (
-  WrappedComponent: ComponentType<OwnPropsOfControl>
+  WrappedComponent: ComponentType<ControlProps>
 ) => {
-  return (props: OwnPropsOfControl) => {
+  return (props: ControlProps) => {
     const { visible, uischema } = props;
 
     const removeElement = useDeleteUiElement();
@@ -41,7 +41,7 @@ export const withElementControls = (
               <X
                 size={16}
                 className="cursor-pointer"
-                onClick={() => removeElement(uischema as ControlElement)}
+                onClick={() => removeElement(uischema)}
               />
             </TooltipTrigger>
             <TooltipContent>Remove Element</TooltipContent>
@@ -90,7 +90,7 @@ export const withLayoutControls = (
           </Tooltip>
         </div>
         <WrappedComponent {...props} />
-        {uischema && addElementControls}
+        {addElementControls}
       </div>
     );
   };

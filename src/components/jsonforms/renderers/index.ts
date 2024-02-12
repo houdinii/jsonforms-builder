@@ -1,4 +1,8 @@
 import { type JsonFormsRendererRegistryEntry } from "@jsonforms/core";
+import {
+  withJsonFormsControlProps,
+  withJsonFormsLayoutProps
+} from "@jsonforms/react";
 
 import CheckboxRendered from "./inputs/CheckboxRendered";
 import EnumRenderer from "./inputs/EnumRenderer";
@@ -34,12 +38,12 @@ const elementRenderers = [
 
 const elementRenderersWithControls = elementRenderers.map((el) => ({
   ...el,
-  renderer: withElementControls(el.renderer)
+  renderer: withJsonFormsControlProps(withElementControls(el.noPropsRenderer))
 }));
 
 const uiRenderersWithControls = uiRenderers.map((el) => ({
   ...el,
-  renderer: withLayoutControls(el.renderer)
+  renderer: withJsonFormsLayoutProps(withLayoutControls(el.noPropsRenderer))
 }));
 
 export const renderersWithControls: JsonFormsRendererRegistryEntry[] = [

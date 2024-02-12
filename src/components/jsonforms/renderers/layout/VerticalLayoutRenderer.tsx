@@ -32,9 +32,10 @@ const categorizationRendererTester: RankedTester = rankWith(
 
 const renderer = withJsonFormsLayoutProps(VerticalLayoutRenderer);
 
-renderer.displayName = "Vertical Layout";
+VerticalLayoutRenderer.displayName = "Vertical Layout";
 
 export default {
   renderer,
-  tester: categorizationRendererTester
+  tester: categorizationRendererTester,
+  noPropsRenderer: VerticalLayoutRenderer
 };

@@ -39,12 +39,16 @@ const removeElementFromLayout = (
     return undefined;
   }
 
-  return {
-    ...uiElement,
-    elements: uiElement.elements
-      .map((el) => removeElementFromLayout(el as Layout, elementToRemove))
-      .filter(Boolean) as UISchemaElement[]
-  };
+  if (uiElement.elements) {
+    return {
+      ...uiElement,
+      elements: uiElement.elements
+        .map((el) => removeElementFromLayout(el as Layout, elementToRemove))
+        .filter(Boolean) as UISchemaElement[]
+    };
+  }
+
+  return uiElement;
 };
 
 export const useAddUiElement = (parentElement: Layout | ControlElement) => {

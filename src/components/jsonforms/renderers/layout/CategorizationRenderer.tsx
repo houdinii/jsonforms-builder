@@ -73,9 +73,10 @@ const categorizationRendererTester: RankedTester = rankWith(
 
 const renderer = withJsonFormsLayoutProps(CategorizationRenderer);
 
-renderer.displayName = "Categorization Layout";
+CategorizationRenderer.displayName = "Categorization Layout";
 
 export default {
   renderer,
-  tester: categorizationRendererTester
+  tester: categorizationRendererTester,
+  noPropsRenderer: CategorizationRenderer
 };

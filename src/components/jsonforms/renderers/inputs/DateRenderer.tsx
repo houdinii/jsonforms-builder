@@ -19,7 +19,7 @@ const DateRenderer = ({
   visible,
   description,
   handleChange
-}: Omit<ControlProps, "data"> & { data?: Date }) => {
+}: ControlProps) => {
   if (!visible) {
     return null;
   }
@@ -44,7 +44,7 @@ const DateRenderer = ({
         <PopoverContent className="w-auto p-0">
           <Calendar
             mode="single"
-            selected={date}
+            selected={date as Date}
             onSelect={(val) =>
               val ? handleChange(path, format(val, "yyyy-MM-dd")) : null
             }
@@ -60,6 +60,6 @@ const tester = rankWith(2, isDateControl);
 
 const renderer = withJsonFormsControlProps(DateRenderer);
 
-renderer.displayName = "Date Input";
+DateRenderer.displayName = "Date Input";
 
-export default { tester, renderer };
+export default { tester, renderer, noPropsRenderer: DateRenderer };

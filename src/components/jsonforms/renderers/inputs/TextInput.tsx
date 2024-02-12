@@ -14,8 +14,8 @@ const TextInput = ({
   visible,
   description,
   handleChange
-}: Omit<ControlProps, "data"> & { data?: string }) => {
-  const [value, setValue] = useState(data);
+}: ControlProps) => {
+  const [value, setValue] = useState(data as string);
 
   const debouncedValue = useDebounce(value);
 
@@ -44,6 +44,6 @@ const tester = rankWith(1, isControl);
 
 const renderer = withJsonFormsControlProps(TextInput);
 
-renderer.displayName = "Text Input";
+TextInput.displayName = "Text Input";
 
-export default { tester, renderer };
+export default { tester, renderer, noPropsRenderer: TextInput };

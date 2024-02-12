@@ -16,7 +16,7 @@ const EnumRenderer = ({
   handleChange,
   description,
   schema: { enum: enumValues = [] }
-}: Omit<ControlProps, "data"> & { data?: string }) => {
+}: ControlProps) => {
   if (!visible) {
     return null;
   }
@@ -43,6 +43,6 @@ const tester = rankWith(2, isEnumControl);
 
 const renderer = withJsonFormsControlProps(EnumRenderer);
 
-renderer.displayName = "Enum Input";
+EnumRenderer.displayName = "Enum Input";
 
-export default { tester, renderer };
+export default { tester, renderer, noPropsRenderer: EnumRenderer };

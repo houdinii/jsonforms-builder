@@ -26,8 +26,8 @@ const NumberInput = ({
   description,
   schema: { type },
   handleChange
-}: Omit<ControlProps, "data"> & { data?: number }) => {
-  const [value, setValue] = useState<string>(`${data ?? ""}`);
+}: ControlProps) => {
+  const [value, setValue] = useState<string>(`${(data as string) ?? ""}`);
 
   const debouncedValue = useDebounce(value);
 
@@ -68,6 +68,6 @@ const tester = rankWith(2, or(isNumberControl, isIntegerControl));
 
 const renderer = withJsonFormsControlProps(NumberInput);
 
-renderer.displayName = "Number Input";
+NumberInput.displayName = "Number Input";
 
-export default { tester, renderer };
+export default { tester, renderer, noPropsRenderer: NumberInput };
