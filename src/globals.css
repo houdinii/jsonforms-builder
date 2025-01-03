@@ -6,6 +6,7 @@
   min-width: 0;
 }
 
+/*noinspection CssUnusedSymbol*/
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -39,6 +40,7 @@
     --radius: 0.5rem;
   }
 
+  /*noinspection CssUnusedSymbol*/
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -79,3 +81,14 @@
   }
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  width: 100vw;
+}
+
+#root { /* or whatever your root element is */
+  overflow-x: hidden;
+  width: 100%;
+}
