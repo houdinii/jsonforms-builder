@@ -1,73 +1,75 @@
-import { useState } from "react";
+// noinspection JSUnusedGlobalSymbols
 
-import { GroupLabel } from "../GroupLabelAdd/GroupLabelAdd";
-import { useFormData } from "../providers/FormDataProvider";
+import { useState } from 'react';
+
+import { GroupLabel } from '../GroupLabelAdd/GroupLabelAdd';
+import { useFormData } from '../providers/FormDataProvider';
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from '@/components/ui/select';
 
 export enum UiElementTypes {
-  horizontal = "HorizontalLayout",
-  vertical = "VerticalLayout",
-  group = "Group",
-  categorization = "Categorization"
+    horizontal = 'HorizontalLayout',
+    vertical = 'VerticalLayout',
+    group = 'Group',
+    categorization = 'Categorization'
 }
 
 export const FormInitializer = () => {
-  const [addingGroup, setAddingGroup] = useState(false);
+    const [addingGroup, setAddingGroup] = useState(false);
 
-  const { changeUiSchema } = useFormData();
+    const { changeUiSchema } = useFormData();
 
-  const onSelectChange = (value: keyof typeof UiElementTypes) => {
-    const actions = {
-      horizontal: () => {
-        changeUiSchema({
-          type: "HorizontalLayout",
-          elements: []
-        });
-      },
-      vertical: () => {
-        changeUiSchema({
-          type: "VerticalLayout",
-          elements: []
-        });
-      },
-      group: () => {
-        setAddingGroup(true);
-      },
-      categorization: () => {
-        changeUiSchema({
-          type: "Categorization",
-          elements: []
-        });
-      }
+    const onSelectChange = (value: keyof typeof UiElementTypes) => {
+        const actions = {
+            horizontal: () => {
+                changeUiSchema({
+                    type: 'HorizontalLayout',
+                    elements: []
+                });
+            },
+            vertical: () => {
+                changeUiSchema({
+                    type: 'VerticalLayout',
+                    elements: []
+                });
+            },
+            group: () => {
+                setAddingGroup(true);
+            },
+            categorization: () => {
+                changeUiSchema({
+                    type: 'Categorization',
+                    elements: []
+                });
+            }
+        };
+
+        actions[value]();
     };
 
-    actions[value]();
-  };
-
-  return (
-    <div>
-      <div className="h-full flex flex-col justify-end items-end">
-        <Select onValueChange={onSelectChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Add ui element" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(UiElementTypes).map(([key, value]) => (
-              <SelectItem value={key} key={key}>
-                {value}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      {addingGroup && <GroupLabel />}
-    </div>
-  );
+    return (
+        <div>
+            <div className="h-full flex flex-col justify-end items-end">
+                <Select onValueChange={onSelectChange}>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Add ui element" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Object.entries(UiElementTypes).map(([key, value]) => (
+                            <SelectItem value={key} key={key}>
+                                {value}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+            {addingGroup && <GroupLabel />}
+        </div>
+    );
 };

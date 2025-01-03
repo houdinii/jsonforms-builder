@@ -6,6 +6,7 @@
   min-width: 0;
 }
 
+/*noinspection CssUnusedSymbol*/
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -39,6 +40,7 @@
     --radius: 0.5rem;
   }
 
+  /*noinspection CssUnusedSymbol*/
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;

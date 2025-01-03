@@ -7,6 +7,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react';
 
 // @ts-ignore
 interface ParagraphRendererProps extends ControlProps {
+    // noinspection Annotator
     uischema: {
         type: string;
         text?: string;

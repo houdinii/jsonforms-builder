@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { type ChangeEvent, type FC, useState } from 'react';
 
 import { type ControlElement, type Layout, toDataPath } from '@jsonforms/core';
