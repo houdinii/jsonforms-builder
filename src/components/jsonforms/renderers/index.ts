@@ -19,6 +19,7 @@ import {
   withElementControls,
   withLayoutControls
 } from "@/components/jsonforms/renderers/withControls";
+import ParagraphRenderer from "@/components/jsonforms/renderers/inputs/ParagraphRenderer";
 
 const uiRenderers = [
   VerticalLayoutRenderer,
@@ -33,11 +34,14 @@ const elementRenderers = [
   TextInput,
   DateRenderer,
   NumberRenderer,
-  EnumRenderer
+  EnumRenderer,
+  ParagraphRenderer
 ];
 
 const elementRenderersWithControls = elementRenderers.map((el) => ({
   ...el,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   renderer: withJsonFormsControlProps(withElementControls(el.noPropsRenderer))
 }));
 
@@ -55,4 +59,3 @@ export const renderersWithoutControls: JsonFormsRendererRegistryEntry[] = [
   ...uiRenderers,
   ...elementRenderers
 ];
-
