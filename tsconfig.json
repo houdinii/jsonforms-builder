@@ -20,7 +20,13 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
+  "build":{
+    "rollupOptions": {
+      "output": {
+        "manualChunks": 1000
+      }
+    }
+  },
   "include": ["src", "@", ".eslintrc.cjs", "tailwind.config.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-
