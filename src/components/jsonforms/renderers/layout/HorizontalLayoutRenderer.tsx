@@ -20,8 +20,8 @@ const HorizontalLayoutRenderer = (props: LayoutProps) => {
   }
 
   return (
-    <div className="rounded-md mb-2">
-      <div className={`grid ${gridColsClass} gap-4 items-end`}>
+    <div className="rounded-md mb-1">
+      <div className={`grid ${gridColsClass} gap-2 items-end`}>
         {elements.map((child, idx) => {
           return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
         })}

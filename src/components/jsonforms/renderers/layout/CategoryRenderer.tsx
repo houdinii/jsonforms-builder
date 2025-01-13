@@ -17,8 +17,8 @@ const CategoryRenderer = (props: LayoutProps) => {
   }
 
   return (
-    <div className=" rounded-md mb-2">
-      {label && <h3 className="text-xl">{label}</h3>}
+    <div className=" rounded-md mb-1">
+      {label && <h3 className="text-lg">{label}</h3>}
       {elements.map((child, idx) => {
         return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
       })}

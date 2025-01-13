@@ -16,7 +16,7 @@ const CheckboxRenderer = ({
   }
 
   return (
-    <div className="flex items-center space-x-2 mb-2">
+    <div className="flex items-center space-x-2 mb-1">
       <Checkbox
         id="checkbox"
         checked={data as boolean}

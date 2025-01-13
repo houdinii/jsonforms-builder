@@ -1,26 +1,20 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { type ChangeEvent, type FC, useState } from 'react';
+import {type ChangeEvent, type FC, useState} from 'react';
 
-import { type ControlElement, type Layout, toDataPath } from '@jsonforms/core';
+import {type ControlElement, type JsonFormsCore, type Layout, toDataPath} from '@jsonforms/core';
 import get from 'lodash.get';
 import set from 'lodash.set';
-import { X } from 'lucide-react';
+import {X} from 'lucide-react';
 
-import { useAddElement, useAddUiElement } from '../jsonforms/hooks/useElements';
-import { useFormData } from '../providers/FormDataProvider';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from '../ui/select';
+import {useAddElement, useAddUiElement} from '../jsonforms/hooks/useElements';
+import {useFormData} from '../providers/FormDataProvider';
+import {Input} from '../ui/input';
+import {Label} from '../ui/label';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '../ui/select';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import {Badge} from '@/components/ui/badge';
+import {Button} from '@/components/ui/button';
 
 enum ControlElementTypes {
     input = 'Text',
@@ -32,10 +26,40 @@ enum ControlElementTypes {
     paragraph = 'Paragraph'
 }
 
+interface ScopeValidationResult {
+    isValid: boolean;
+    exists: boolean;
+    message?: string;
+}
+
+const validateScope = (scope: string, schema: JsonFormsCore["schema"]): ScopeValidationResult => {
+    const variablePart = scope.replace('#/properties/', '');
+    const isValidFormat = /^[a-zA-Z][a-zA-Z0-9_]*$/.test(variablePart);
+    const exists = !!get(schema, scope.replace('#/', '').replaceAll('/', '.'));
+
+    if (!isValidFormat) {
+        return {
+            isValid: false,
+            exists: false,
+            message: 'Scope must start with a letter and contain only letters, numbers, and underscores'
+        };
+    }
+
+    if (exists) {
+        return {
+            isValid: false,
+            exists: true,
+            message: 'This scope already exists'
+        };
+    }
+
+    return {isValid: true, exists: false};
+};
+
 type ElementType = keyof typeof ControlElementTypes;
 export const AddElement: FC<{
     uiSchema: Layout | ControlElement;
-}> = ({ uiSchema }) => {
+}> = ({uiSchema}) => {
     const [elementType, setElementType] = useState<ElementType>();
 
     const onSelectChange = (value: ElementType) => {
@@ -58,7 +82,7 @@ export const AddElement: FC<{
                     />
                 );
             case 'enum':
-                return <EnumElement uiSchema={uiSchema} />;
+                return <EnumElement uiSchema={uiSchema}/>;
             case 'paragraph':
                 return (
                     <ElementWithText
@@ -74,7 +98,7 @@ export const AddElement: FC<{
         <div className="w-full">
             <Select onValueChange={onSelectChange}>
                 <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Add control element" />
+                    <SelectValue placeholder="Add control element"/>
                 </SelectTrigger>
                 <SelectContent>
                     {Object.entries(ControlElementTypes).map(([key, value]) => (
@@ -92,13 +116,15 @@ export const AddElement: FC<{
 const ElementWithDescription: FC<{
     elementType: keyof typeof ControlElementTypes | undefined;
     uiSchema: Layout | ControlElement;
-}> = ({ elementType, uiSchema }) => {
+}> = ({elementType, uiSchema}) => {
     const [scope, setScope] = useState<string>('#/properties/');
     const [description, setDescription] = useState<string>();
 
     const handleUiElementAdd = useAddUiElement(uiSchema);
     const handleAddElement = useAddElement();
-    const { changeData, data, schema } = useFormData();
+    const {changeData, data, schema} = useFormData();
+
+    const scopeValidation = validateScope(scope, schema);
 
     const resetStates = () => {
         setDescription(undefined);
@@ -106,15 +132,11 @@ const ElementWithDescription: FC<{
     };
 
     const handleScopeChange = (ev: ChangeEvent<HTMLInputElement>) => {
-        if (ev.target.value.startsWith('#/properties/')) {
-            setScope(ev.target.value);
+        const val = ev.target.value;
+        if (val.startsWith('#/properties/')) {
+            setScope(val);
         }
     };
-
-    const scopeAlreadyExists = !!get(
-        schema,
-        scope.replace('#/', '').replaceAll('/', '.')
-    );
 
     const handleButtonClick = () => {
         if (!scope) {
@@ -123,13 +145,13 @@ const ElementWithDescription: FC<{
 
         const actions = {
             input: () => {
-                handleUiElementAdd({ type: 'Control', scope });
-                handleAddElement(scope, { type: 'string', description });
+                handleUiElementAdd({type: 'Control', scope});
+                handleAddElement(scope, {type: 'string', description});
                 resetStates();
             },
             boolean: () => {
-                handleUiElementAdd({ type: 'Control', scope });
-                handleAddElement(scope, { type: 'boolean', description });
+                handleUiElementAdd({type: 'Control', scope});
+                handleAddElement(scope, {type: 'boolean', description});
                 changeData(set(data, toDataPath(scope), false));
 
                 resetStates();
@@ -138,19 +160,19 @@ const ElementWithDescription: FC<{
                 // handled by Enum Component
             },
             number: () => {
-                handleUiElementAdd({ type: 'Control', scope });
-                handleAddElement(scope, { type: 'number', description });
+                handleUiElementAdd({type: 'Control', scope});
+                handleAddElement(scope, {type: 'number', description});
 
                 resetStates();
             },
             integer: () => {
-                handleUiElementAdd({ type: 'Control', scope });
-                handleAddElement(scope, { type: 'integer', description });
+                handleUiElementAdd({type: 'Control', scope});
+                handleAddElement(scope, {type: 'integer', description});
 
                 resetStates();
             },
             date: () => {
-                handleUiElementAdd({ type: 'Control', scope });
+                handleUiElementAdd({type: 'Control', scope});
                 handleAddElement(scope, {
                     type: 'string',
                     format: 'date',
@@ -193,9 +215,9 @@ const ElementWithDescription: FC<{
                 onChange={handleScopeChange}
                 className="mb-2"
             />
-            {scopeAlreadyExists && (
+            {scopeValidation.message && (
                 <p className="text-xs text-destructive">
-                    The specified scope conflicts with previously added scopes
+                    {scopeValidation.message}
                 </p>
             )}
 
@@ -208,9 +230,7 @@ const ElementWithDescription: FC<{
             <Button
                 className="w-full mt-4"
                 onClick={handleButtonClick}
-                disabled={
-                    !/^#\/properties\/.+/.test(scope) || scopeAlreadyExists
-                }
+                disabled={!scopeValidation.isValid || scopeValidation.exists}
             >
                 Add element
             </Button>
@@ -220,17 +240,20 @@ const ElementWithDescription: FC<{
 
 const EnumElement: FC<{
     uiSchema: Layout | ControlElement;
-}> = ({ uiSchema }) => {
+}> = ({uiSchema}) => {
     const [description, setDescription] = useState<string>();
     const [scope, setScope] = useState<string>('#/properties/');
     const [enums, setEnums] = useState<string[]>([]);
     const [newOption, setNewOption] = useState<string>('');
+    const {schema} = useFormData()
 
     const handleUiElementAdd = useAddUiElement(uiSchema);
     const handleAddElement = useAddElement();
 
+    const scopeValidation = validateScope(scope, schema);
+
     const handleButtonClick = () => {
-        handleUiElementAdd({ type: 'Control', scope });
+        handleUiElementAdd({type: 'Control', scope});
         handleAddElement(scope, {
             type: 'string',
             description,
@@ -294,6 +317,11 @@ const EnumElement: FC<{
                 className="mb-2"
                 onChange={handleScopeChange}
             />
+            {scopeValidation.message && (
+                <p className="text-xs text-destructive">
+                    {scopeValidation.message}
+                </p>
+            )}
             <Label htmlFor="description">Description</Label>
             <Input
                 id="description"
@@ -303,7 +331,7 @@ const EnumElement: FC<{
             <Button
                 className="w-full mt-4"
                 onClick={handleButtonClick}
-                disabled={!/^#\/properties\/.+/.test(scope)}
+                disabled={!scopeValidation.isValid || scopeValidation.exists}
             >
                 Add element
             </Button>
@@ -315,7 +343,7 @@ const EnumElement: FC<{
 const ElementWithText: FC<{
     elementType: keyof typeof ControlElementTypes;
     uiSchema: Layout | ControlElement;
-}> = ({ elementType, uiSchema }) => {
+}> = ({uiSchema}) => {
     const [scope, setScope] = useState<string>('#/properties/');
     const [text, setText] = useState<string>('');
     const [format, setFormat] = useState<'plain' | 'html' | 'markdown'>(
@@ -323,7 +351,7 @@ const ElementWithText: FC<{
     );
 
     const handleUiElementAdd = useAddUiElement(uiSchema);
-    const { schema } = useFormData();
+    const {schema} = useFormData();
 
     const handleScopeChange = (ev: ChangeEvent<HTMLInputElement>) => {
         if (ev.target.value.startsWith('#/properties/')) {
@@ -331,10 +359,8 @@ const ElementWithText: FC<{
         }
     };
 
-    const scopeAlreadyExists = !!get(
-        schema,
-        scope.replace('#/', '').replaceAll('/', '.')
-    );
+    const scopeValidation = validateScope(scope, schema);
+    const scopeAlreadyExists = scopeValidation.exists;
 
     const handleButtonClick = () => {
         handleUiElementAdd({
@@ -357,7 +383,7 @@ const ElementWithText: FC<{
                 required
                 value={scope ?? '#/properties/'}
                 placeholder="Scope"
-                className="mb-2"
+                className="mb-1"
                 onChange={handleScopeChange}
             />
             {scopeAlreadyExists && (
@@ -371,17 +397,17 @@ const ElementWithText: FC<{
                 id="text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                className="w-full h-24 p-2 border rounded mb-2"
+                className="w-full h-24 p-1 border rounded mb-1"
             />
 
-            <div className="flex gap-4 mb-2">
+            <div className="flex gap-4 mb-1">
                 {/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */}
                 <Select
                     value={format}
-                    onValueChange={(val: any) => setFormat(val)}
+                    onValueChange={(val: 'plain' | 'html' | 'markdown') => setFormat(val)}
                 >
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Format" />
+                        <SelectValue placeholder="Format"/>
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="plain">Plain Text</SelectItem>

@@ -45,18 +45,18 @@ const ParagraphRenderer: React.FC<ParagraphRendererProps> = ({
             case 'html':
                 return (
                     <div
-                        className="mb-2"
+                        className="mb-1"
                         dangerouslySetInnerHTML={{ __html: renderedText }}
-                    />
+                    />    
                 );
             case 'markdown':
                 return (
-                    <div className="mb-2">
+                    <div className="mb-1">
                         <ReactMarkdown>{renderedText}</ReactMarkdown>
                     </div>
                 );
             default:
-                return <p className="mb-2">{renderedText}</p>;
+                return <p className="mb-1">{renderedText}</p>;
         }
     };
 

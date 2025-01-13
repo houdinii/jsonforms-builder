@@ -25,7 +25,7 @@ const DateRenderer = ({
   }
 
   return (
-    <div className="flex flex-col gap-1 mb-2">
+    <div className="flex flex-col gap-1 mb-1">
       <Label htmlFor="dateInput">{description}</Label>
       <Popover>
         <PopoverTrigger asChild>
@@ -37,7 +37,7 @@ const DateRenderer = ({
               !date && "text-muted-foreground"
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-1 h-4 w-4" />
             {date ? format(date, "PPP") : <span>{description}</span>}
           </Button>
         </PopoverTrigger>

@@ -92,3 +92,35 @@ html, body {
   overflow-x: hidden;
   width: 100%;
 }
+.gutter {
+  background-color: #464646;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter:hover {
+  background-color: #666;
+}
+
+.gutter.gutter-horizontal {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+  cursor: col-resize;
+}
+
+/* Ensure the split container takes full width */
+.split {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+/* Style the split panes */
+.split > div {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Optional: Add smooth transitions */
+.gutter-horizontal {
+  transition: background-color 150ms ease;
+}

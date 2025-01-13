@@ -19,8 +19,8 @@ const GroupRenderer = (props: LayoutProps) => {
   }
 
   return (
-    <div className="rounded-md  mb-2">
-      {label && <h3 className="text-2xl mb-2">{label}</h3>}
+    <div className="rounded-md mb-1">
+      {label && <h3 className="text-lg mb-1">{label}</h3>}
       {elements.map((child) => {
         return (
           <JsonFormsDispatch

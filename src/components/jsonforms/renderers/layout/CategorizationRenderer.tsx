@@ -34,7 +34,7 @@ const CategorizationRenderer = (props: LayoutProps) => {
                     return isVisible(category, props.data, '', ajv);
                 }
             ),
-        [ajv, props.data]
+        [ajv, categorization?.elements, props.data]
     );
 
     if (!visible) {
@@ -42,7 +42,7 @@ const CategorizationRenderer = (props: LayoutProps) => {
     }
 
     return (
-        <div className="rounded-md p-5  mb-2">
+        <div className="rounded-md p-1  mb-1 ">
             <Tabs defaultValue="0" className="w-full">
                 <TabsList className="grid w-full grid-cols-3">
                     {categories.map(({ label }, idx: number) => (
