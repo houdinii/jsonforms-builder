@@ -104,7 +104,7 @@ export const useDeleteUiElement = () => {
         const newCopy = removeElementFromLayout(
             uischema as Layout,
             elementToDelete as Layout // it's simpler to cast than to bother with the types
-        );
+        ) || null;
 
         changeUiSchema(newCopy);
     };
