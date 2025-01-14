@@ -38,6 +38,11 @@
         --ring: 240 10% 3.9%;
 
         --radius: 0.5rem;
+        --light-background: #e3e4ed;
+        --app-blue: #255c97;
+        --app-blue2: #4b719a;
+        --light-text: #e6eaed;
+        --dark-text: #30383e;
     }
 
     /*noinspection CssUnusedSymbol*/

@@ -16,6 +16,7 @@ export const UiSchemaCodeBlock = () => {
 
   const stringified = uischema ? JSON.stringify(uischema, null, 2) : "";
 
+  
   const [code, setCode] = useState(stringified);
 
   const handleSave = () => {

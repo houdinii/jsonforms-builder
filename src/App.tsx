@@ -15,7 +15,7 @@ function App() {
                         <TooltipProvider>
                             <Split
                                 sizes={[25, 75]} // Initial split sizes (25% left, 75% right)
-                                minSize={300} // Minimum size for each pane
+                                minSize={250} // Minimum size for each pane
                                 expandToMin={false}
                                 gutterSize={8}
                                 gutterAlign="center"

@@ -16,14 +16,14 @@ export const LeftSide = () => {
         <div className="h-full">
             <h2 className="text-xl text-center mb-2 text-slate-50">Shapes</h2>
             <div className="h-[calc(100%-4rem)] overflow-y-auto">
-                <Tabs defaultValue="uiSchema" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4">
+                <Tabs defaultValue="uiSchema" className="TabsRoot w-full">
+                    <TabsList className="TabsList grid w-full grid-cols-4">
                         <TabsTrigger value="uiSchema">UiSchema</TabsTrigger>
                         <TabsTrigger value="schema">Schema</TabsTrigger>
                         <TabsTrigger value="data">Data</TabsTrigger>
                         <TabsTrigger value="form">Clean form</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="schema">
+                    <TabsContent className="TabsContent" value="schema">
                         {schema ? (
                             <SchemaCodeBlock key={JSON.stringify(schema)}/>
                         ) : (
@@ -32,7 +32,7 @@ export const LeftSide = () => {
                             </p>
                         )}
                     </TabsContent>
-                    <TabsContent value="uiSchema">
+                    <TabsContent className="TabsContent" value="uiSchema">
                         {uischema ? (
                             <UiSchemaCodeBlock key={JSON.stringify(uischema)}/>
                         ) : (
@@ -41,14 +41,14 @@ export const LeftSide = () => {
                             </p>
                         )}
                     </TabsContent>
-                    <TabsContent value="data">
+                    <TabsContent className="TabsContent" value="data">
                         <CodeBlock
                             text={JSON.stringify(data, null, 2)}
                             language={"json"}
                             showLineNumbers={true}
                         />
                     </TabsContent>
-                    <TabsContent value="form">
+                    <TabsContent className="TabsContent" value="form">
                         {isValidForm ? (
                             <div className="p-2 bg-slate-50 rounded-sm">
                                 <JsonForms
