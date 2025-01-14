@@ -1,50 +1,39 @@
 import {
-  type GroupLayout,
-  type LabelDescription,
-  type LayoutProps,
-  type RankedTester,
-  rankWith,
-  uiTypeIs
+    type GroupLayout,
+    type LabelDescription,
+    type RankedTester,
+    rankWith,
+    uiTypeIs
 } from "@jsonforms/core";
-import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
+import {withJsonFormsLayoutProps} from "@jsonforms/react";
+import {ExtendedLayoutProps} from "@/components/jsonforms/types";
 
-const GroupRenderer = (props: LayoutProps) => {
-  const { uischema, visible, ...rest } = props;
+const GroupRenderer = (props: ExtendedLayoutProps) => {
+    const {uischema, visible} = props;
+    const group = uischema as GroupLayout & LabelDescription;
+    const {label} = group;
 
-  const group = uischema as GroupLayout & LabelDescription;
-  const { label, elements } = group;
+    if (!visible) {
+        return null;
+    }
 
-  if (!visible) {
-    return null;
-  }
-
-  return (
-    <div className="rounded-md mb-1">
-      {label && <h3 className="text-lg mb-1">{label}</h3>}
-      {elements.map((child) => {
-        return (
-          <JsonFormsDispatch
-            key={`${child.type}-${label ?? ""}-${elements.indexOf(child)}`}
-            uischema={child}
-            {...rest}
-          />
-        );
-      })}
-    </div>
-  );
+    return (
+        <div className="rounded-md mb-1">
+            {label && <h3 className="text-lg mb-1">{label}</h3>}
+            {props.children}
+        </div>
+    );
 };
 
-const categorizationRendererTester: RankedTester = rankWith(
-  6,
-  uiTypeIs("Group")
-);
+
+const groupRendererTester: RankedTester = rankWith(6, uiTypeIs("Group"));
 
 const renderer = withJsonFormsLayoutProps(GroupRenderer);
 
 GroupRenderer.displayName = "Group";
 
 export default {
-  renderer,
-  tester: categorizationRendererTester,
-  noPropsRenderer: GroupRenderer
+    renderer,
+    tester: groupRendererTester,
+    noPropsRenderer: GroupRenderer
 };

@@ -1,33 +1,25 @@
-import {
-  type LayoutProps,
-  type RankedTester,
-  rankWith,
-  uiTypeIs,
-  type VerticalLayout
-} from "@jsonforms/core";
-import { JsonFormsDispatch, withJsonFormsLayoutProps } from "@jsonforms/react";
+import {type RankedTester, rankWith, uiTypeIs} from "@jsonforms/core";
+import {withJsonFormsLayoutProps} from "@jsonforms/react";
+import {ExtendedLayoutProps} from "@/components/jsonforms/types";
 
-const VerticalLayoutRenderer = (props: LayoutProps) => {
-  const { uischema, visible, ...rest } = props;
 
-  const { elements } = uischema as VerticalLayout;
+const VerticalLayoutRenderer = (props: ExtendedLayoutProps) => {
+    const {visible} = props;
 
-  if (!visible) {
-    return null;
-  }
+    if (!visible) {
+        return null;
+    }
 
-  return (
-    <div>
-      {elements.map((child, idx) => {
-        return <JsonFormsDispatch key={idx} uischema={child} {...rest} />;
-      })}
-    </div>
-  );
+    return (
+        <div>
+            {props.children}
+        </div>
+    );
 };
 
 const categorizationRendererTester: RankedTester = rankWith(
-  6,
-  uiTypeIs("VerticalLayout")
+    6,
+    uiTypeIs("VerticalLayout")
 );
 
 const renderer = withJsonFormsLayoutProps(VerticalLayoutRenderer);
@@ -35,7 +27,7 @@ const renderer = withJsonFormsLayoutProps(VerticalLayoutRenderer);
 VerticalLayoutRenderer.displayName = "Vertical Layout";
 
 export default {
-  renderer,
-  tester: categorizationRendererTester,
-  noPropsRenderer: VerticalLayoutRenderer
+    renderer,
+    tester: categorizationRendererTester,
+    noPropsRenderer: VerticalLayoutRenderer
 };
