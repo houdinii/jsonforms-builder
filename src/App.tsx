@@ -17,7 +17,7 @@ function App() {
                                 sizes={[25, 75]} // Initial split sizes (25% left, 75% right)
                                 minSize={300} // Minimum size for each pane
                                 expandToMin={false}
-                                gutterSize={4}
+                                gutterSize={8}
                                 gutterAlign="center"
                                 snapOffset={30}
                                 dragInterval={1}
@@ -25,7 +25,7 @@ function App() {
                                 cursor="col-resize"
                                 className="flex"
                             >
-                                <div className="h-[calc(100vh-64px)] overflow-y-auto border-r-[0.5px] border-r-white">
+                                <div className="h-[calc(100vh-64px)] overflow-y-auto">
                                     <div className="p-3">
                                         <LeftSide/>
                                     </div>

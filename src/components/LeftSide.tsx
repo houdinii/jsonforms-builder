@@ -1,10 +1,8 @@
+// components/LeftSide.tsx
 import {CodeBlock} from "react-code-blocks";
-
 import {JsonForms} from "@jsonforms/react";
-
 import {useFormData} from "./providers/FormDataProvider";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "./ui/tabs";
-
 import {renderersWithoutControls} from "@/components/jsonforms/renderers";
 import {SchemaCodeBlock} from "@/components/SchemaCodeBlock/SchemaCodeBlock";
 import {UiSchemaCodeBlock} from "@/components/UiSchemaCodeBlock/UiSchemaCodeBlock";
@@ -12,11 +10,12 @@ import {UiSchemaCodeBlock} from "@/components/UiSchemaCodeBlock/UiSchemaCodeBloc
 export const LeftSide = () => {
     const {uischema, schema, data, changeData} = useFormData();
 
+    const isValidForm = uischema && schema && Object.keys(schema.properties || {}).length > 0;
+
     return (
         <div className="h-full">
             <h2 className="text-xl text-center mb-2 text-slate-50">Shapes</h2>
             <div className="h-[calc(100%-4rem)] overflow-y-auto">
-
                 <Tabs defaultValue="uiSchema" className="w-full">
                     <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="uiSchema">UiSchema</TabsTrigger>
@@ -50,16 +49,13 @@ export const LeftSide = () => {
                         />
                     </TabsContent>
                     <TabsContent value="form">
-                        {uischema ? (
+                        {isValidForm ? (
                             <div className="p-2 bg-slate-50 rounded-sm">
                                 <JsonForms
-                                    key={JSON.stringify(uischema) + JSON.stringify(schema)}
                                     schema={schema}
                                     uischema={uischema}
                                     data={data}
-                                    onChange={({data: newData}) => {
-                                        changeData(newData);
-                                    }}
+                                    onChange={({data: newData}) => changeData(newData)}
                                     renderers={renderersWithoutControls}
                                 />
                             </div>
@@ -70,7 +66,6 @@ export const LeftSide = () => {
                         )}
                     </TabsContent>
                 </Tabs>
-
             </div>
         </div>
     );

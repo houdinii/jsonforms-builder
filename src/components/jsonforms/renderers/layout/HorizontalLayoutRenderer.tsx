@@ -1,18 +1,25 @@
 // components/jsonforms/renderers/layout/HorizontalLayoutRenderer.tsx
-import {type RankedTester, rankWith, uiTypeIs} from "@jsonforms/core";
-import {withJsonFormsLayoutProps} from "@jsonforms/react";
+import {HorizontalLayout, type RankedTester, rankWith, uiTypeIs} from "@jsonforms/core";
+import {JsonFormsDispatch, withJsonFormsLayoutProps} from "@jsonforms/react";
 import {ExtendedLayoutProps} from "@/components/jsonforms/types";
 
 const HorizontalLayoutRenderer = (props: ExtendedLayoutProps) => {
-    const {visible} = props;
+    const {uischema, visible, ...rest } = props;
+    const {elements} = uischema as HorizontalLayout;
 
     if (!visible) {
         return null;
     }
 
     return (
-        <div className="rounded-md mb-1">
-            {props.children}
+        <div>
+            {elements.map((child, idx) => (
+                <JsonFormsDispatch
+                    key={idx}
+                    uischema={child}
+                    {...rest}
+                />
+            ))}
         </div>
     );
 };

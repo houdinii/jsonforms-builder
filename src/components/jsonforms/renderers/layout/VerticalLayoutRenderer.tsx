@@ -1,10 +1,10 @@
-import {type RankedTester, rankWith, uiTypeIs} from "@jsonforms/core";
-import {withJsonFormsLayoutProps} from "@jsonforms/react";
-import {ExtendedLayoutProps} from "@/components/jsonforms/types";
+// components/jsonforms/renderers/layout/VerticalLayoutRenderer.tsx
+import {type LayoutProps, type RankedTester, rankWith, uiTypeIs, type VerticalLayout} from "@jsonforms/core";
+import {JsonFormsDispatch, withJsonFormsLayoutProps} from "@jsonforms/react";
 
-
-const VerticalLayoutRenderer = (props: ExtendedLayoutProps) => {
-    const {visible} = props;
+const VerticalLayoutRenderer = (props: LayoutProps) => {
+    const {uischema, visible, ...rest} = props;
+    const {elements} = uischema as VerticalLayout;
 
     if (!visible) {
         return null;
@@ -12,22 +12,29 @@ const VerticalLayoutRenderer = (props: ExtendedLayoutProps) => {
 
     return (
         <div>
-            {props.children}
+            {elements.map((child, idx) => (
+                <JsonFormsDispatch
+                    key={idx}
+                    uischema={child}
+                    {...rest}
+                />
+            ))}
         </div>
     );
 };
 
-const categorizationRendererTester: RankedTester = rankWith(
+const verticalLayoutTester: RankedTester = rankWith(
     6,
     uiTypeIs("VerticalLayout")
 );
 
+// For clean form, use this renderer directly without the HOC
 const renderer = withJsonFormsLayoutProps(VerticalLayoutRenderer);
 
 VerticalLayoutRenderer.displayName = "Vertical Layout";
 
 export default {
     renderer,
-    tester: categorizationRendererTester,
+    tester: verticalLayoutTester,
     noPropsRenderer: VerticalLayoutRenderer
 };

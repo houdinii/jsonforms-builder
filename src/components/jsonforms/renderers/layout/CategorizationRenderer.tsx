@@ -34,7 +34,7 @@ const CategorizationRenderer = (props: LayoutProps) => {
                     return isVisible(category, props.data, '', ajv);
                 }
             ),
-        [ajv, categorization?.elements, props.data]
+        [ajv, props.data]
     );
 
     if (!visible) {

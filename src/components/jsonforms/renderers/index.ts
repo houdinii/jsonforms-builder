@@ -50,12 +50,37 @@ const uiRenderersWithControls = uiRenderers.map((el) => ({
   renderer: withJsonFormsLayoutProps(withLayoutControls(el.noPropsRenderer))
 }));
 
+// Create clean versions of renderers without the HOC wrappers
+const cleanUiRenderers = [
+  VerticalLayoutRenderer,
+  HorizontalLayoutRenderer,
+  CategorizationRenderer,
+  CategoryRenderer,
+  GroupRenderer
+].map(r => ({
+  ...r,
+  renderer: r.renderer // Use the renderer property, not noPropsRenderer
+}));
+
+// Create clean versions of element renderers
+const cleanElementRenderers = [
+  CheckboxRendered,
+  TextInput,
+  DateRenderer,
+  NumberRenderer,
+  EnumRenderer,
+  ParagraphRenderer
+].map(r => ({
+  ...r,
+  renderer: r.renderer // Use the renderer property, not noPropsRenderer
+}));
+
 export const renderersWithControls: JsonFormsRendererRegistryEntry[] = [
   ...elementRenderersWithControls,
   ...uiRenderersWithControls
 ];
 
 export const renderersWithoutControls: JsonFormsRendererRegistryEntry[] = [
-  ...uiRenderers,
-  ...elementRenderers
-];
+    ...cleanUiRenderers,
+    ...cleanElementRenderers
+].map(r => ({...r, renderer: r.renderer || r.noPropsRenderer}));

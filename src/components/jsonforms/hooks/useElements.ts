@@ -8,6 +8,28 @@ import {
 import set from 'lodash.set';
 
 import { useFormData } from '../../providers/FormDataProvider';
+import omit from 'lodash/omit';
+
+
+const findAllControlScopes = (
+    element: Layout | ControlElement,
+    scopes: Set<string> = new Set()
+): Set<string> => {
+    // If it's a control element with a scope, add it
+    if (isControl(element) && element.scope) {
+        const key = element.scope.replace('#/properties/', '');
+        scopes.add(key);
+    }
+
+    // If it has child elements, recursively process them
+    if ('elements' in element && Array.isArray(element.elements)) {
+        element.elements.forEach(child => {
+            findAllControlScopes(child as Layout | ControlElement, scopes);
+        });
+    }
+
+    return scopes;
+};
 
 const addElementToLayout = (
     uiElement: Layout,
@@ -57,6 +79,7 @@ const removeElementFromLayout = (
     return uiElement;
 };
 
+
 export const useAddUiElement = (parentElement: Layout | ControlElement) => {
     const { changeUiSchema, uischema } = useFormData();
 
@@ -92,20 +115,37 @@ export const useAddElement = () => {
 };
 
 export const useDeleteUiElement = () => {
-    const { changeUiSchema, uischema } = useFormData();
+    const { changeUiSchema, uischema, changeSchema, schema } = useFormData();
 
     return (elementToDelete: Layout | ControlElement) => {
-        if (!uischema) {
-            changeUiSchema(elementToDelete);
+        // Find ALL control scopes in the element being deleted and its children
+        const scopesToRemove = findAllControlScopes(elementToDelete);
 
+        // Remove the element from uischema
+        if (!uischema) {
+            changeUiSchema(null);
             return;
         }
 
-        const newCopy = removeElementFromLayout(
+        const newUiSchema = removeElementFromLayout(
             uischema as Layout,
-            elementToDelete as Layout // it's simpler to cast than to bother with the types
+            elementToDelete as Layout
         ) || null;
 
-        changeUiSchema(newCopy);
+        changeUiSchema(newUiSchema);
+
+        // Update schema by removing all found properties
+        if (scopesToRemove.size > 0) {
+            const newProperties = omit(
+                schema.properties,
+                Array.from(scopesToRemove)
+            );
+
+            changeSchema({
+                ...schema,
+                // @ts-ignore
+                properties: newProperties
+            });
+        }
     };
 };
